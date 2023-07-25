@@ -20,7 +20,8 @@ class Board {
 };
 
 template <typename P> void Board::setSquare(Coordinate p) {
-    if (coordsInRange(p)) throw std::out_of_range();
+    if (!coordsInRange(p)) throw std::out_of_range("Board::setSquare: coords out of range");
+    // TODO
 }
 
 #endif
