@@ -2,7 +2,7 @@
 #define AI_PLAYER_LEVEL3_H_
 #include "aiplayer.h"
 
-class AIPlayerLevel3 : public AIPlayer{
+class AIPlayerLevel3 : public AIPlayer {
 
 };
 

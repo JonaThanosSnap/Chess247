@@ -2,7 +2,7 @@
 #define BOARD_H_
 #include "piece/piece.h"
 
-class Board{
+class Board {
 
 };
 

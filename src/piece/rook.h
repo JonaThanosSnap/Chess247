@@ -2,7 +2,7 @@
 #define ROOK_H_
 #include "piece.h"
 
-class Rook : public Piece{
+class Rook : public Piece {
 
 };
 

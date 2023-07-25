@@ -2,7 +2,7 @@
 #define BISHOP_H_
 #include "piece.h"
 
-class Bishop : public Piece{
+class Bishop : public Piece {
 
 };
 

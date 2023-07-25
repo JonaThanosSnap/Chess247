@@ -2,7 +2,7 @@
 #define AI_PLAYER_H_
 #include "../player.h"
 
-class AIPlayer : public Player{
+class AIPlayer : public Player {
 
 };
 

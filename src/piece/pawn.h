@@ -2,7 +2,7 @@
 #define PAWN_H_
 #include "piece.h"
 
-class Pawn : public Piece{
+class Pawn : public Piece {
 
 };
 
