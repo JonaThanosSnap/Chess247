@@ -9,19 +9,20 @@
 class Board {
     std::unique_ptr<Piece> grid[8][8];
 
-    bool coordsInRange(Coordinate p);
+    bool coordsInRange(Coordinate p) const noexcept;
 
     public:
         Board();
-
-        template<typename P> void setSquare(Coordinate p);
+        template<typename P> void setSquare(Coordinate p, Player* player);
         void clearSquare(Coordinate p);
-        bool isValidMove(Coordinate s, Coordinate d);
+        bool isValidMove(Coordinate s, Coordinate d) const;
+        std::vector<Coordinate> getOccupiedSquares() const noexcept;
 };
 
-template <typename P> void Board::setSquare(Coordinate p) {
+template <typename P> void Board::setSquare(Coordinate p, Player* player) {
+    // Allocate new Piece and place it into a grid square
     if (!coordsInRange(p)) throw std::out_of_range("Board::setSquare: coords out of range");
-    // TODO
+    grid[p.y()][p.x()] = std::make_unique<P>(player);
 }
 
 #endif

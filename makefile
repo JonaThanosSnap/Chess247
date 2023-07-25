@@ -1,7 +1,7 @@
 CXX=g++
 CXXFLAGS=-std=c++14 -Wall -g -MMD
 
-EXEC=chessnut
+EXEC=pawnhub
 CCFILES=$(shell find . -name "*.cc")
 OBJECTS=${CCFILES:.cc=.o}
 DEPENDS=${CCFILES:.cc=.d}
