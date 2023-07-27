@@ -74,3 +74,8 @@ std::vector<Coordinate> Board::getOccupiedSquares() const noexcept {
     }
     return occupiedSquares;
 }
+
+const Piece* Board::getSquare(Coordinate p) const noexcept {
+    if (!coordsInRange(p)) throw std::out_of_range("Board::getSquare: coords out of range");
+    return grid[p.y()][p.x()].get();
+}

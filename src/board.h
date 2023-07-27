@@ -17,6 +17,7 @@ class Board {
         void clearSquare(Coordinate p);
         bool isValidMove(Coordinate s, Coordinate d) const;
         std::vector<Coordinate> getOccupiedSquares() const noexcept;
+        const Piece* getSquare(Coordinate p) const noexcept;
 };
 
 template <typename P> void Board::setSquare(Coordinate p, Player* player) {
