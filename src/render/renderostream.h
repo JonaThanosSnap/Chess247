@@ -14,6 +14,10 @@ public:
     // board to reference and ostream to print to
     RenderOStream(Board* board, std::ostream&);
     void render() const override;
+    // determine if a given square should be rendered as 
+    //  blank vs underscore(_)
+    bool isWhite(Coordinate&) const;
+    char getPieceChar(Piece*) const;
 };
 
 #endif
