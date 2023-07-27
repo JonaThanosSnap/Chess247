@@ -19,6 +19,7 @@ class Coordinate {
         int x() const noexcept;
         int y() const noexcept;
         bool operator==(const Coordinate& other) const noexcept;
+        Coordinate operator+(const Coordinate& other) const noexcept;
 };
 
 #endif

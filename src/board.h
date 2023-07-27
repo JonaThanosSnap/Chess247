@@ -3,27 +3,31 @@
 #include <vector>
 #include <memory>
 #include <stdexcept>
-#include "piece/piece.h"
+#include "piece.h"
+#include "team.h"
 #include "coordinate.h"
 
+const int BOARD_WIDTH = 8;
+
 class Board {
-    std::unique_ptr<Piece> grid[8][8];
+    Piece grid[BOARD_WIDTH][BOARD_WIDTH];
 
     bool coordsInRange(Coordinate p) const noexcept;
 
+    std::vector<Coordinate> getValidMoves(Coordinate p) const;
+    std::vector<Coordinate> getValidMovesPawn(Coordinate p) const;
+    std::vector<Coordinate> getValidMovesRook(Coordinate p) const;
+    std::vector<Coordinate> getValidMovesKnight(Coordinate p) const;
+    std::vector<Coordinate> getValidMovesBishop(Coordinate p) const;
+    std::vector<Coordinate> getValidMovesQueen(Coordinate p) const;
+    std::vector<Coordinate> getValidMovesKing(Coordinate p) const;
+
     public:
         Board();
-        template<typename P> void setSquare(Coordinate p, Player* player);
+        void setSquare(Coordinate p, Piece piece);
         void clearSquare(Coordinate p);
+        Piece getSquare(Coordinate p) const noexcept;
         bool isValidMove(Coordinate s, Coordinate d) const;
-        std::vector<Coordinate> getOccupiedSquares() const noexcept;
-        const Piece* getSquare(Coordinate p) const noexcept;
 };
-
-template <typename P> void Board::setSquare(Coordinate p, Player* player) {
-    // Allocate new Piece and place it into a grid square
-    if (!coordsInRange(p)) throw std::out_of_range("Board::setSquare: coords out of range");
-    grid[p.y()][p.x()] = std::make_unique<P>(player);
-}
 
 #endif
