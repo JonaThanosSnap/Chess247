@@ -18,6 +18,8 @@ class Coordinate {
         void translate(int dx, int dy) noexcept;
         int x() const noexcept;
         int y() const noexcept;
+        bool operator==(const Coordinate& other) const noexcept;
+        Coordinate operator+(const Coordinate& other) const noexcept;
 };
 
 #endif

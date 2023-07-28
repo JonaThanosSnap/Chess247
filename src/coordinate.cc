@@ -28,3 +28,11 @@ int Coordinate::x() const noexcept{
 int Coordinate::y() const noexcept{
     return _y;
 }
+
+bool Coordinate::operator==(const Coordinate& other) const noexcept {
+    return _x == other._x && _y == other._y;
+}
+
+Coordinate Coordinate::operator+(const Coordinate& other) const noexcept {
+    return Coordinate{_x + other._x, _y + other._y};
+}
