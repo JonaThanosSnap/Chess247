@@ -23,6 +23,7 @@ class Piece {
         Team getTeam() const noexcept;
         void setHasMoved(bool value) noexcept;
         void setCanBeEnPassented(bool value) noexcept;
+        bool getHasMoved() const noexcept;
 
         static Piece Empty();
         static Piece Pawn(Team team);

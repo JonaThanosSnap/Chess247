@@ -131,8 +131,29 @@ std::vector<Coordinate> Board::getValidMoves(Coordinate p) const {
 }
 
 std::vector<Coordinate> Board::getValidMovesPawn(Coordinate p) const {
-    if (!coordsInRange(p)) throw std::out_of_range("Board::getValidMovesPawn: position out of range");
-    // TODO
+    if (!coordsInRange(p)) throw std::out_of_range("Board::getValidMovePawn: position out of range");
+    
+    Team team = getSquare(p).getTeam();
+
+    std::vector<Coordinate> validMoves;
+
+    std::vector<Coordinate> deltas = {Coordinate{0, 1}};
+
+    if(!getSquare(p).getHasMoved()){
+        deltas.push_back(Coordinate{0, 2});
+    }
+
+    for(Coordinate delta : deltas){
+        Coordinate candidate = p + delta;
+        if (coordsInRange(candidate)){
+            Piece otherPiece = getSquare(candidate);
+            // can only move to location if it is empty
+            if (otherPiece == Piece::Empty()) {
+                validMoves.push_back(candidate);
+            }
+        }   
+    }
+    return validMoves;
 }
 
 std::vector<Coordinate> Board::getValidMovesRook(Coordinate p) const {
@@ -146,8 +167,10 @@ std::vector<Coordinate> Board::getValidMovesRook(Coordinate p) const {
     std::vector<Coordinate> deltas = {Coordinate{0, -1}, Coordinate{0, 1}, Coordinate{-1, 0}, Coordinate{1, 0}};
     for (Coordinate delta : deltas) {
         Coordinate candidate = p + delta;
+        // while the candidate is in range
         while (coordsInRange(candidate)) {
             Piece otherPiece = getSquare(candidate);
+            // if the current candidate location has a piece on it
             if (otherPiece != Piece::Empty()) {
                 // stop iteration when another piece is encountered
                 if (otherPiece.getTeam() != team) {
@@ -165,24 +188,17 @@ std::vector<Coordinate> Board::getValidMovesRook(Coordinate p) const {
 }
 
 std::vector<Coordinate> Board::getValidMovesKnight(Coordinate p) const {
-    if (!coordsInRange(p)) throw std::out_of_range("Board::getValidMovesKnight: position out of range");
-
+    if (!coordsInRange(p)) throw std::out_of_range("Board::getValidMoveKnight: position out of range");
     Team team = getSquare(p).getTeam();
 
     std::vector<Coordinate> validMoves;
-
-    std::vector<Coordinate> deltas = {Coordinate{1, -2}, Coordinate{2, -1}, Coordinate{2, 1}, Coordinate{1, 2}, Coordinate{-1, 2}, Coordinate{-2, 1}, Coordinate{-2, -1}, Coordinate{-1, -2}};
-
-    for(Coordinate delta : deltas){
+    std::vector<Coordinate> deltas = {Coordinate{1, -2}, Coordinate{2, -1}, Coordinate{1, 2}, Coordinate{2, 1}, Coordinate{-1, -2}, Coordinate{-2, -1}, Coordinate{-1, 2}, Coordinate{-2, 1}};
+    for (Coordinate delta : deltas) {
         Coordinate candidate = p + delta;
-        if(coordsInRange(candidate)){
+        if (coordsInRange(candidate)){
             Piece otherPiece = getSquare(candidate);
-            // if destination is an ally, we cannot move there
-            if (otherPiece != Piece::Empty() && otherPiece.getTeam() == team) {
-                continue;
-            }
-            // destination is either empty or an enemy; we can move there
-            else{
+            // can only move to location if it is empty or occupied by an enemy
+            if (otherPiece == Piece::Empty() || otherPiece.getTeam() != team) {
                 validMoves.push_back(candidate);
             }
         }
@@ -191,25 +207,68 @@ std::vector<Coordinate> Board::getValidMovesKnight(Coordinate p) const {
 }
 
 std::vector<Coordinate> Board::getValidMovesBishop(Coordinate p) const {
-    if (!coordsInRange(p)) throw std::out_of_range("Board::getValidMovesBishop: position out of range");
-    // TODO
+    if (!coordsInRange(p)) throw std::out_of_range("Board::getValidMoveBishop: position out of range");
+    Team team = getSquare(p).getTeam();
+
+    std::vector<Coordinate> validMoves;
+    std::vector<Coordinate> deltas = {Coordinate{1, 1}, Coordinate{1, -1}, Coordinate{-1, 1}, Coordinate{-1, -1}};
+    for (Coordinate delta : deltas) {
+        Coordinate candidate = p + delta;
+        // while the candidate is in range
+        while (coordsInRange(candidate)) {
+            Piece otherPiece = getSquare(candidate);
+            // if the current candidate location has a piece on it
+            if (otherPiece != Piece::Empty()) {
+                // if the piece is an enemy, we can move there then break
+                if (otherPiece.getTeam() != team) {
+                    validMoves.push_back(candidate);
+                }
+                break;
+            }
+
+            validMoves.push_back(candidate);
+            candidate = candidate + delta;
+        }
+    }
+    return validMoves;
 }
 
 std::vector<Coordinate> Board::getValidMovesQueen(Coordinate p) const {
-    if (!coordsInRange(p)) throw std::out_of_range("Board::getValidMovesQueen: position out of range");
-    // a combination of rook and bishop behaviour
-    // TODO
+    if (!coordsInRange(p)) throw std::out_of_range("Board::getValidMoveQueen: position out of range");
+    Team team = getSquare(p).getTeam();
+
+    std::vector<Coordinate> validMoves;
+    std::vector<Coordinate> deltas = {Coordinate{1, 1}, Coordinate{1, -1}, Coordinate{-1, 1}, Coordinate{-1, -1}, Coordinate{0, -1}, Coordinate{0, 1}, Coordinate{-1, 0}, Coordinate{1, 0}};
+    for (Coordinate delta : deltas) {
+        Coordinate candidate = p + delta;
+        // while the candidate is in range
+        while (coordsInRange(candidate)) {
+            Piece otherPiece = getSquare(candidate);
+            // if the current candidate location has a piece on it
+            if (otherPiece != Piece::Empty()) {
+                // if the piece is an enemy, we can move there then break
+                if (otherPiece.getTeam() != team) {
+                    validMoves.push_back(candidate);
+                }
+                break;
+            }
+
+            validMoves.push_back(candidate);
+            candidate = candidate + delta;
+        }
+    }
+    return validMoves;
 }
 
 std::vector<Coordinate> Board::getValidMovesKing(Coordinate p) const {
-    if (!coordsInRange(p)) throw std::out_of_range("Board::getValidMovesKing: position out of range");
-    // do similar thing to othe valid moves functions with deltas and such
-    // check whether or not moving to that position puts the king into check
-    // handle castling by checking the following items
-    //      whether the king has moved
-    //      whether the path to the king/queen side rook is clear
-    //      whether the king/queen side rook has moved before
-    // TODO
+    if (!coordsInRange(p)) throw std::out_of_range("Board::getValidMoveKing: position out of range");
+    // do the same as rook and bishop but only one square
+    // consider castle by checking the following items
+    // 1. king has not moved
+    // 2. rook has not moved
+    // 3. no pieces between king and rook
+    // 4. king is not in check
+
 }
 
 Team Board::getEnemyTeam(Team team) const noexcept {
