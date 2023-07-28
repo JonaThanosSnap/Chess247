@@ -1,16 +1,31 @@
 #include <iostream>
 #include "render/renderostream.h"
-#include "board.h"
+#include "chess.h"
+#include "exception.h"
 
 int main() {
-    Board board;
-    RenderOStream render{&board, std::cout};
+    Chess chess;
+    RenderOStream render{chess.getBoard(), std::cout};
 
-    //board.setSquare(Coordinate{"e2"}, Piece::Empty());
-    //board.setSquare(Coordinate{"e5"}, Piece::Pawn(Team::Black));
-
+    chess.startGame();
     render.render();
 
-    std::cout << board.isValidMove(Coordinate{"e7"}, Coordinate{"e4"}) << std::endl;
+    std::string sStr, dStr;
+    std::cout << "Please input move (eg. e2 e4): " << std::flush;
+    while (std::cin >> sStr >> dStr) {
+        try {
+            if (sStr.size() < 2 || dStr.size() < 2) throw InvalidMoveException{};
+            if (
+                'a' > sStr[0] || 'h' < sStr[0] || '1' > sStr[1] || '8' < sStr[1] ||
+                'a' > dStr[0] || 'h' < dStr[0] || '1' > dStr[1] || '8' < dStr[1]
+            ) throw InvalidMoveException{};
+            chess.makeMove(Coordinate{sStr}, Coordinate{dStr});
+        } catch (InvalidMoveException& e) {
+            std::cout << "Invalid move!" << std::endl;
+        }
+        render.render();
+        std::cout << "Please input move: " << std::flush;
+    }
+
     return 0;
 }

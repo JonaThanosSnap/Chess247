@@ -36,3 +36,16 @@ bool Coordinate::operator==(const Coordinate& other) const noexcept {
 Coordinate Coordinate::operator+(const Coordinate& other) const noexcept {
     return Coordinate{_x + other._x, _y + other._y};
 }
+
+Coordinate Coordinate::operator-(const Coordinate& other) const noexcept {
+    return Coordinate{_x - other._x, _y - other._y};
+}
+
+int Coordinate::manhattanDistance(const Coordinate& other) const noexcept {
+    return abs(_x - other._x) + abs(_y - other._y);
+}
+
+void Coordinate::normalizeComponents() noexcept {
+    if (_x != 0) _x = _x / abs(_x);
+    if (_y != 0) _y = _y / abs(_y);
+}
