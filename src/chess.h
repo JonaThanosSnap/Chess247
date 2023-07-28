@@ -13,7 +13,7 @@ class Chess {
     bool isGameStarted = false;
 
     Board board;
-    Team currentTeam;
+    Team currentTeam = Team::White;
 
     std::map<Team, std::unique_ptr<Player>> players;
 

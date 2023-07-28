@@ -10,6 +10,8 @@ void Chess::makeMove(Coordinate s, Coordinate d) {
     if (!board.isValidMove(s, d)) throw InvalidMoveException{};
 
     Piece piece = board.getSquare(s);
+    if (piece.getTeam() != currentTeam) throw InvalidMoveException{};
+
     piece.setHasMoved(true);
 
     // Handle pawn double move (for en passant purposes)
@@ -44,6 +46,8 @@ void Chess::makeMove(Coordinate s, Coordinate d) {
     }
 
     // TODO Handle pawn promotion
+
+    currentTeam = (currentTeam == Team::White) ? Team::Black : Team::White;
 }
 
 void Chess::setupEnter() noexcept {
