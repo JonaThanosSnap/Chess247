@@ -1,8 +1,8 @@
 #ifndef BOARD_H_
 #define BOARD_H_
-#include <vector>
 #include <memory>
 #include <stdexcept>
+#include <vector>
 #include "piece.h"
 #include "team.h"
 #include "coordinate.h"
@@ -13,6 +13,11 @@ class Board {
     Piece grid[BOARD_WIDTH][BOARD_WIDTH];
 
     bool coordsInRange(Coordinate p) const noexcept;
+    Team getEnemyTeam(Team team) const noexcept;
+    Coordinate getKingCoords(Team team) const noexcept;
+    std::vector<Coordinate> getPieceCoords(Team team) const noexcept;
+    bool isSquareThreatened(Team threatenedTeam, Coordinate p) const noexcept;
+    bool isInCheck(Team threatenedTeam) const noexcept;
 
     std::vector<Coordinate> getValidMoves(Coordinate p) const;
     std::vector<Coordinate> getValidMovesPawn(Coordinate p) const;

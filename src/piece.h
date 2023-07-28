@@ -4,26 +4,17 @@
 #include "team.h"
 
 class Piece {
-    enum class Type {
-        None,
-        Pawn,
-        Rook,
-        Knight,
-        Bishop,
-        Queen,
-        King
-    };
-
-    Type type;
-    Team team;
-
-    bool hasMoved = false;
-    bool canBeEnPassanted = false;
-
-    // This is private to prevent FORGERY
-    Piece(Type type, Team team);
-
     public:
+        enum class Type {
+            None,
+            Pawn,
+            Rook,
+            Knight,
+            Bishop,
+            Queen,
+            King
+        };
+
         Piece();
         Piece(const Piece& other);
         Piece(Piece&& other);
@@ -45,6 +36,15 @@ class Piece {
         void operator=(Piece&& other);
         bool operator==(const Piece& other);
         bool operator!=(const Piece& other);
+    private:
+        Type type;
+        Team team;
+
+        bool hasMoved = false;
+        bool canBeEnPassanted = false;
+
+        // This is private to prevent FORGERY
+        Piece(Type type, Team team);
 };
 
 #endif
