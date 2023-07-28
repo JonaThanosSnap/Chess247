@@ -77,9 +77,11 @@ void InputManager::handleInput() {
                 // if coordinates are malformed, we need to catch this
                 Coordinate s{start};
                 Coordinate e{dest};
+
+                bool moveReturn = game->makeMove(s, e);
                 break;
             } catch (...) {
-                std::cout << "The inputted coordinates are not valid. They should be in the form <a-g><1-8>." << std::endl;
+                std::cout << "Your move could not be made. Try again." << std::endl;
             }
         }
 
