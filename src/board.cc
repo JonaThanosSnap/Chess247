@@ -58,23 +58,42 @@ Piece Board::getSquare(Coordinate p) const noexcept {
 
 // determines whether or not a move is valid
 bool Board::isValidMove(Coordinate s, Coordinate d) const {
+    // the game plan:
+    //  - check that the start and end coordinates are inside the board
+    //  - check that the move is valid without considering checks
+    //  - check if we end the turn with the king in check
+    
     if (!coordsInRange(s)) throw std::out_of_range("Board::isValidMove: start position out of range");
     if (!coordsInRange(d)) throw std::out_of_range("Board::isValidMove: end position out of range");
-    if (getSquare(s) == Piece::Empty()) return false;
 
-    std::vector<Coordinate> validMoves = getValidMoves(s);
-    if (std::find(validMoves.begin(), validMoves.end(), d) != validMoves.end()) {
-        return true;
-    } else {
+    Piece piece = getSquare(s);
+    Piece::Type pieceType = piece.getType();
+    Team pieceTeam = piece.getTeam();
+
+    // Starting square is empty
+    if (pieceType == Piece::Type::None) {
         return false;
+    }
+
+    // Check if move is in the piece's valid moves
+    std::vector<Coordinate> validMoves = getValidMoves(s);
+    if (std::find(validMoves.begin(), validMoves.end(), d) == validMoves.end()) {
+        return false;
+    }
+
+    // Check if move will put the king in check by simulating the move then rolling back
+    Board mockBoard{*this};
+    mockBoard.clearSquare(s);
+    mockBoard.setSquare(d, piece);
+    if (mockBoard.isInCheck(pieceTeam)) {
+        return false;
+    } else {
+        return true;
     }
 }
 
 std::vector<Coordinate> Board::getValidMoves(Coordinate p) const {
-    // isValidMove => if the move is in getValidMoves()
-    //                then check if we end the turn with king in check
     // getValidMoves => first finds all 'possible' moves without considering check.         
-
 
     if (!coordsInRange(p)) throw std::out_of_range("Board::getValidMoves: position out of range");
 
@@ -113,6 +132,7 @@ std::vector<Coordinate> Board::getValidMoves(Coordinate p) const {
 
 std::vector<Coordinate> Board::getValidMovesPawn(Coordinate p) const {
     if (!coordsInRange(p)) throw std::out_of_range("Board::getValidMovesPawn: position out of range");
+    // TODO
 }
 
 std::vector<Coordinate> Board::getValidMovesRook(Coordinate p) const {
@@ -172,12 +192,13 @@ std::vector<Coordinate> Board::getValidMovesKnight(Coordinate p) const {
 
 std::vector<Coordinate> Board::getValidMovesBishop(Coordinate p) const {
     if (!coordsInRange(p)) throw std::out_of_range("Board::getValidMovesBishop: position out of range");
+    // TODO
 }
 
 std::vector<Coordinate> Board::getValidMovesQueen(Coordinate p) const {
     if (!coordsInRange(p)) throw std::out_of_range("Board::getValidMovesQueen: position out of range");
     // a combination of rook and bishop behaviour
-
+    // TODO
 }
 
 std::vector<Coordinate> Board::getValidMovesKing(Coordinate p) const {
@@ -188,7 +209,7 @@ std::vector<Coordinate> Board::getValidMovesKing(Coordinate p) const {
     //      whether the king has moved
     //      whether the path to the king/queen side rook is clear
     //      whether the king/queen side rook has moved before
-
+    // TODO
 }
 
 Team Board::getEnemyTeam(Team team) const noexcept {
