@@ -8,7 +8,7 @@
 
 Coordinate::Coordinate(int x, int y): _x{x}, _y{y} {}
 
-Coordinate::Coordinate(std::string p): _x{p[0]-'a'}, _y{p[1]-'0'} {}
+Coordinate::Coordinate(std::string p): _x{p[0]-'a'}, _y{p[1]-'1'} {}
 
 std::string Coordinate::toString() const noexcept{
     char letter = 'a' + _x;

@@ -137,10 +137,10 @@ std::vector<Coordinate> Board::getValidMovesPawn(Coordinate p) const {
 
     std::vector<Coordinate> validMoves;
 
-    std::vector<Coordinate> deltas = {Coordinate{0, 1}};
+    std::vector<Coordinate> deltas = {Coordinate{0, team == Team::White ? 1 : -1}};
 
     if(!getSquare(p).getHasMoved()){
-        deltas.push_back(Coordinate{0, 2});
+        deltas.push_back(Coordinate{0, team == Team::White ? 2 : -2});
     }
 
     for(Coordinate delta : deltas){
@@ -268,7 +268,7 @@ std::vector<Coordinate> Board::getValidMovesKing(Coordinate p) const {
     // 2. rook has not moved
     // 3. no pieces between king and rook
     // 4. king is not in check
-
+    return {};
 }
 
 Team Board::getEnemyTeam(Team team) const noexcept {
