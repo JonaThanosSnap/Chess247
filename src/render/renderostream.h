@@ -1,10 +1,12 @@
 #ifndef RENDER_OSTREAM_H_
 #define RENDER_OSTREAM_H_
 #include "chessrender.h"
+#include "../coordinate.h"
 #include <iostream>
 
-// forward declaration for Board ptr
+// forward declaration for Board,Piece ptr
 class Board;
+class Piece;
 
 class RenderOStream : public ChessRender{
 private:
@@ -17,7 +19,7 @@ public:
     // determine if a given square should be rendered as 
     //  blank vs underscore(_)
     bool isWhite(const Coordinate&) const;
-    char getPieceChar(Piece*) const;
+    char getPieceChar(const Piece&) const;
 };
 
 #endif

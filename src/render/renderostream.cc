@@ -1,6 +1,6 @@
 #include "renderostream.h"
 #include "../board.h"
-#include "../piece/piece.h"
+#include "../piece.h"
 #include "../coordinate.h"
 #include "../team.h"
 #include <iostream>
@@ -8,7 +8,7 @@
 RenderOStream::RenderOStream(Board* board, std::ostream& out): 
     ChessRender{board}, out{out} {};
 
-bool RenderOStream::isWhite(Coordinate& c) const {
+bool RenderOStream::isWhite(const Coordinate& c) const {
     // define black and white split as follows:
     //  - set a1 to be black
     //  - every square adjacent to a given square is the opposite colour
@@ -25,14 +25,14 @@ bool RenderOStream::isWhite(Coordinate& c) const {
     }
 }
 
-char RenderOStream::getPieceChar(const Piece* piece) const {
+char RenderOStream::getPieceChar(const Piece& piece) const {
     // determine what char to use to display a given piece
     // use switch case for expandability + factor in team
 
-    switch (piece->getTeam()) {
+    switch (piece.getTeam()) {
         case Team::White:
             // char displays for white team pieces
-            switch(piece->getPieceType()) {
+            switch(piece.getType()) {
                 case Piece::Type::Pawn:
                     return 'P';
                     break;
@@ -51,12 +51,14 @@ char RenderOStream::getPieceChar(const Piece* piece) const {
                 case Piece::Type::King:
                     return 'K';
                     break;
+                default:
+                    return ' ';
             }
             break;
 
         case Team::Black:
             // char displays for black team pieces
-            switch(piece->getPieceType()) {
+            switch(piece.getType()) {
                 case Piece::Type::Pawn:
                     return 'p';
                     break;
@@ -75,6 +77,8 @@ char RenderOStream::getPieceChar(const Piece* piece) const {
                 case Piece::Type::King:
                     return 'k';
                     break;
+                default:
+                    return ' ';
             }
             break;
     }
@@ -89,15 +93,15 @@ void RenderOStream::render() const {
         out << 8-i << " ";
 
         for (int j=0; j < 8; j++) {
-            Coordinate c{i, j};
-            Piece* piece = board->getSquare(c);
+            Coordinate c{j, 7-i};
+            Piece piece = board->getSquare(c);
             
-            if (piece != nullptr) {
+            if (piece.getType() != Piece::Type::None) {
                 // there is a piece on this square
                 out << getPieceChar(piece);
             } else {
                 // this square is empty
-                out << isWhite(c) ? ' ' : '_';
+                out << (isWhite(c) ? "□" : "■");
             }
         }
         out << std::endl;
@@ -106,7 +110,7 @@ void RenderOStream::render() const {
     
     // file
     out << "  ";
-    for (int i='a'; i <= 'h'; i++) {
+    for (char i='a'; i <= 'h'; i++) {
         out << i;
     }
     
