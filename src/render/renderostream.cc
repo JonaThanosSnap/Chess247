@@ -1,11 +1,9 @@
 #include "renderostream.h"
-#include "board.h"
-#include "piece.h"
-#include "coordinate.h"
-#include "team.h"
+#include "../board.h"
+#include "../piece/piece.h"
+#include "../coordinate.h"
+#include "../team.h"
 #include <iostream>
-
-class Piece;
 
 RenderOStream::RenderOStream(Board* board, std::ostream& out): 
     ChessRender{board}, out{out} {};
@@ -27,7 +25,7 @@ bool RenderOStream::isWhite(Coordinate& c) const {
     }
 }
 
-char RenderOStream::getPieceChar(Piece* piece) const {
+char RenderOStream::getPieceChar(const Piece* piece) const {
     // determine what char to use to display a given piece
     // use switch case for expandability + factor in team
 

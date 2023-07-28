@@ -16,7 +16,7 @@ public:
     void render() const override;
     // determine if a given square should be rendered as 
     //  blank vs underscore(_)
-    bool isWhite(Coordinate&) const;
+    bool isWhite(const Coordinate&) const;
     char getPieceChar(Piece*) const;
 };
 
