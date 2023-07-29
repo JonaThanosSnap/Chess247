@@ -6,14 +6,14 @@ void Chess::startGame() noexcept {
 }
 
 void Chess::makeMove(Coordinate s, Coordinate d) {
-    if (!isValidMove(s, d)) throw InvalidMoveException{};
+    if (!board.isValidMove(s, d)) throw InvalidMoveException{};
     if (!isGameStarted) throw GameNotStartedException{};
 
-    Piece piece = getSquare(s);
+    Piece piece = board.getSquare(s);
     if (piece.getTeam() != currentTeam) throw InvalidMoveException{};
 
     board.makeMove(s, d);
-    
+
     currentTeam = (currentTeam == Team::White) ? Team::Black : Team::White;
 }
 

@@ -76,7 +76,7 @@ void Board::makeMove(Coordinate s, Coordinate d) {
             // piece is a pawn that double moved
             enPassantVictim = d;
         } else { // if we dont move 2 squares
-            if (piece.x() != 0) { //if we move diagonally
+            if (pawnDelta.x() != 0) { //if we move diagonally
                 Coordinate victimPosition = d+Coordinate{0, piece.getTeam() == Team::White ? -1 : 1};
                 if (victimPosition == enPassantVictim) {
                     clearSquare(victimPosition);
