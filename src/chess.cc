@@ -6,47 +6,14 @@ void Chess::startGame() noexcept {
 }
 
 void Chess::makeMove(Coordinate s, Coordinate d) {
+    if (!isValidMove(s, d)) throw InvalidMoveException{};
     if (!isGameStarted) throw GameNotStartedException{};
-    if (!board.isValidMove(s, d)) throw InvalidMoveException{};
 
-    Piece piece = board.getSquare(s);
+    Piece piece = getSquare(s);
     if (piece.getTeam() != currentTeam) throw InvalidMoveException{};
 
-    piece.setHasMoved(true);
-
-    // Handle pawn double move (for en passant purposes)
-    if (piece.getType() == Piece::Type::Pawn && s.manhattanDistance(d) == 2) {
-        piece.setCanBeEnPassented(true);
-    }
+    board.makeMove(s, d);
     
-    // Move piece
-    board.clearSquare(s);
-    board.setSquare(d, piece);
-
-    // Handle move rook on castle
-    if (piece.getType() == Piece::Type::King && s.manhattanDistance(d) == 2) {
-        Coordinate delta = d - s;
-        delta.normalizeComponents();  // sets component values to 1
-
-        // Find rook
-        // We assume that there are no pieces in between the king
-        // and friendly unmoved rook in the direction of delta and that
-        // candidate will always be in range before finding rook.
-        Coordinate rookCoords = s;
-        Piece rookPiece;
-        while (piece.getType() != Piece::Type::Rook) {
-            rookCoords = rookCoords + delta;
-            rookPiece = board.getSquare(rookCoords);
-        }
-
-        // Move rook to opposite side of king
-        board.clearSquare(rookCoords);
-        board.setSquare(d - delta, rookPiece);
-        rookPiece.setHasMoved(true);
-    }
-
-    // TODO Handle pawn promotion
-
     currentTeam = (currentTeam == Team::White) ? Team::Black : Team::White;
 }
 

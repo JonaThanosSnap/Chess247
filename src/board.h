@@ -8,9 +8,13 @@
 #include "coordinate.h"
 
 const int BOARD_WIDTH = 8;
+const Coordinate EMPTY_COORDS = Coordinate{-1, -1};
 
 class Board {
     Piece grid[BOARD_WIDTH][BOARD_WIDTH];
+    Coordinate enPassantVictim = EMPTY_COORDS;
+
+    // TODO stack of each move taken so far
 
     bool coordsInRange(Coordinate p) const noexcept;
     Team getEnemyTeam(Team team) const noexcept;
@@ -27,10 +31,14 @@ class Board {
     std::vector<Coordinate> getValidMovesQueen(Coordinate p) const;
     std::vector<Coordinate> getValidMovesKing(Coordinate p) const;
 
+    void notifyPromotion() const noexcept;
+
     public:
         Board();
+        void makeMove(Coordinate s, Coordinate d);
         void setSquare(Coordinate p, Piece piece);
         void clearSquare(Coordinate p);
+        void promote(Coordinate p);
         Piece getSquare(Coordinate p) const noexcept;
         bool isValidMove(Coordinate s, Coordinate d) const;
 };

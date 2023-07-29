@@ -21,7 +21,6 @@ class Coordinate {
         bool operator==(const Coordinate& other) const noexcept;
         Coordinate operator+(const Coordinate& other) const noexcept;
         Coordinate operator-(const Coordinate& other) const noexcept;
-        int manhattanDistance(const Coordinate& other) const noexcept;
         void normalizeComponents() noexcept;
 };
 

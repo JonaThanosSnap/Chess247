@@ -20,10 +20,6 @@ void Piece::setHasMoved(bool value) noexcept {
     hasMoved = true;
 }
 
-void Piece::setCanBeEnPassented(bool value) noexcept {
-    canBeEnPassanted = true;
-}
-
 bool Piece::getHasMoved() const noexcept {
     return hasMoved;
 }
