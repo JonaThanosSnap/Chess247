@@ -1,0 +1,1 @@
+PIECE_W = 48  # Make sure this is consistent with PIECE_W in renderwindow.h

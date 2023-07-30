@@ -6,6 +6,9 @@
 #include <unistd.h>
 #include "window.h"
 
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
+
 Xwindow::Xwindow(int width, int height) {
     d = XOpenDisplay(NULL);
     if (d == NULL) {
@@ -53,6 +56,9 @@ Xwindow::Xwindow(int width, int height) {
 }
 
 Xwindow::~Xwindow() {
+    for (auto kv : imageMap) {
+        XDestroyImage(kv.second);
+    }
     XFreeGC(d, gc);
     XCloseDisplay(d);
 }
@@ -82,4 +88,29 @@ void Xwindow::drawString(int x, int y, std::string msg, int color) {
     XSetForeground(d, gc, getColor(color));
     XDrawString(d, w, gc, x, y, msg.c_str(), msg.length());
     XSetForeground(d, gc, Black);
+}
+
+// Add image
+// Takes a png
+void Xwindow::addImage(std::string file) {
+    //imageMap[file] = createTrueColorImage(d, DefaultVisual(d, 0), width, height);
+    int x, y, n;
+    unsigned char* imgdata = stbi_load(file.c_str(), &x, &y, &n, 4);
+    unsigned char* p = imgdata;
+
+    int nPixels = x*y;
+
+    for (int i = 0; i < nPixels; i++) {
+        unsigned char tmp = p[0];
+        p[0] = p[2];
+        p[2] = tmp;
+        p = p + n;
+    }
+
+    imageMap[file] = XCreateImage(d, DefaultVisual(d, 0), 24, ZPixmap, 0, (char*)imgdata, x, y, 32, 0);
+}
+
+// Draw image
+void Xwindow::putImage(std::string file, int x, int y, int width, int height) {
+    XPutImage(d, w, gc, imageMap.at(file), 0, 0, x-width/2, y-height/2, width, height);
 }

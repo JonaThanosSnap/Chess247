@@ -10,6 +10,7 @@
 const unsigned int WINDOW_W = 600;
 const unsigned int BOARD_W = 512;
 const unsigned int SQUARE_W = BOARD_W/BOARD_WIDTH;
+const unsigned int PIECE_W = 48;
 const unsigned int BOARD_MARGIN = (WINDOW_W - BOARD_W)/2;
 const Coordinate BOARD_TOP_LEFT = Coordinate{BOARD_MARGIN, BOARD_MARGIN};
 
@@ -37,6 +38,8 @@ class RenderWindow : public ChessRender {
         Color::ChessDotComBg,
         Color::ChessDotComWhite
     };
+
+    void addPieceSet(std::string folder_path);
 
     public:
         RenderWindow(Board* board);

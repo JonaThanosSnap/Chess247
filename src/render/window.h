@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <map>
+#include <memory>
 
 class Xwindow {
     Display *d;
@@ -17,6 +18,7 @@ class Xwindow {
     unsigned long White;
 
     std::map<int, unsigned long> colorMap;
+    std::map<std::string, XImage*> imageMap;
 
     public:
         Xwindow(int width=600, int height=600);  // Constructor; displays the window.
@@ -36,6 +38,13 @@ class Xwindow {
 
         // Draws a string
         void drawString(int x, int y, std::string msg, int color);
+
+        // Add image
+        // Takes a png
+        void addImage(std::string file);
+
+        // Draw image
+        void putImage(std::string file, int x, int y, int width, int height);
 };
 
 #endif
