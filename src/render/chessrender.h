@@ -3,6 +3,7 @@
 
 // forward declaration for board ptr
 class Board;
+class Coordinate;
 
 class ChessRender {
 protected:
@@ -13,7 +14,7 @@ protected:
 public:
     ChessRender(Board*);
     virtual ~ChessRender();
-    virtual void render() const = 0;
+    virtual void render() = 0;
 };
 
 #endif

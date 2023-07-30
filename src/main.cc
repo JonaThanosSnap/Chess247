@@ -1,12 +1,12 @@
 #include <iostream>
-#include "render/renderostream.h"
+#include "render/renderwindow.h"
 #include "chess.h"
 #include "exception.h"
 #include "inputmanager.h"
 
 int main() {
     Chess chess;
-    RenderOStream render{chess.getBoard(), std::cout};
+    RenderWindow render{chess.getBoard()};
     InputManager inputManager{&chess};
 
     // chess.startGame();

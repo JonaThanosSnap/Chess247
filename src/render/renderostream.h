@@ -15,7 +15,7 @@ public:
     // you may only construct a RenderOStream given a
     // board to reference and ostream to print to
     RenderOStream(Board* board, std::ostream&);
-    void render() const override;
+    void render() override;
     char getPieceChar(const Piece&) const;
 };
 

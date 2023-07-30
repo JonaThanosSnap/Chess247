@@ -70,7 +70,7 @@ char RenderOStream::getPieceChar(const Piece& piece) const {
     return ' ';
 }
 
-void RenderOStream::render() const {
+void RenderOStream::render() {
     for (int i=0; i < 8; i++) {
         // rank
         out << 8-i << " ";
