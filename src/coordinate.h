@@ -20,6 +20,8 @@ class Coordinate {
         int y() const noexcept;
         bool operator==(const Coordinate& other) const noexcept;
         Coordinate operator+(const Coordinate& other) const noexcept;
+        Coordinate operator-(const Coordinate& other) const noexcept;
+        void normalizeComponents() noexcept;
 };
 
 #endif
