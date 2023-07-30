@@ -6,9 +6,8 @@ class Chess;
 // translates inputs into commands for chess game
 class InputManager {
 private:
-    Chess* game;
+    const Chess* game;
 public:
-    InputManager(Chess*);
     void handleInput();
 };
 
