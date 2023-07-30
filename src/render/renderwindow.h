@@ -36,11 +36,6 @@ class RenderWindow : public ChessRender {
         Color::ChessDotComBg
     };
 
-    unsigned long getColor(Color color) const;
-    unsigned long getWhiteSquareColor() const;
-    unsigned long getBlackSquareColor() const;
-    unsigned long getBgColor() const;
-
     public:
         RenderWindow(Board* board);
         void render() override;

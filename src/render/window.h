@@ -32,10 +32,10 @@ class Xwindow {
         unsigned long getColor(int color) const;
 
         // Draws a rectangle
-        void fillRectangle(int x, int y, int width, int height, unsigned long color);
+        void fillRectangle(int x, int y, int width, int height, int color);
 
         // Draws a string
-        void drawString(int x, int y, std::string msg);
+        void drawString(int x, int y, std::string msg, int color);
 };
 
 #endif

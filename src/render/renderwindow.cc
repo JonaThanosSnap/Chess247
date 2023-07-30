@@ -11,19 +11,19 @@ RenderWindow::RenderWindow(Board* board): ChessRender{board} {
 
 void RenderWindow::render() {
     // Draw bg
-    window.fillRectangle(0, 0, WINDOW_W, WINDOW_W, getBgColor());
+    window.fillRectangle(0, 0, WINDOW_W, WINDOW_W, currentTheme.bgColor);
 
     // Draw board
     for (int i = 0; i < 8; i++) {
         // Draw rank
         std::string rank = std::to_string(8 - i);
-        window.drawString(BOARD_MARGIN/2, BOARD_TOP_LEFT.y() + SQUARE_W/2 + SQUARE_W*i, rank);
+        window.drawString(BOARD_MARGIN/2, BOARD_TOP_LEFT.y() + SQUARE_W/2 + SQUARE_W*i, rank, currentTheme.whiteSquareColor);
 
         for (int j = 0; j < 8; j++) {
             Coordinate c{j, 7-i};
             Piece piece = board->getSquare(c);
             
-            unsigned long squareColor = isWhite(c) ? getWhiteSquareColor() : getBlackSquareColor();
+            unsigned long squareColor = isWhite(c) ? currentTheme.whiteSquareColor : currentTheme.blackSquareColor;
             Coordinate squareTopLeft = BOARD_TOP_LEFT + c*SQUARE_W;
             window.fillRectangle(squareTopLeft.x(), squareTopLeft.y(), SQUARE_W, SQUARE_W, squareColor);
         }
@@ -32,22 +32,6 @@ void RenderWindow::render() {
     // Draw file
     for (int j = 0; j < 8; j++) {
         std::string file{(char)('a' + j)};
-        window.drawString(BOARD_MARGIN + SQUARE_W/2 + SQUARE_W*j, BOARD_TOP_LEFT.y() + BOARD_W + BOARD_MARGIN/2, file);
+        window.drawString(BOARD_MARGIN + SQUARE_W/2 + SQUARE_W*j, BOARD_TOP_LEFT.y() + BOARD_W + BOARD_MARGIN/2, file, currentTheme.blackSquareColor);
     }
-}
-
-unsigned long RenderWindow::getColor(Color color) const {
-    return window.getColor(color);
-}
-
-unsigned long RenderWindow::getBlackSquareColor() const {
-    return getColor(currentTheme.blackSquareColor);
-}
-
-unsigned long RenderWindow::getWhiteSquareColor() const {
-    return getColor(currentTheme.whiteSquareColor);
-}
-
-unsigned long RenderWindow::getBgColor() const {
-    return getColor(currentTheme.bgColor);
 }

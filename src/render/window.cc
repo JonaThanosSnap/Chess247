@@ -72,13 +72,15 @@ unsigned long Xwindow::getColor(int color) const {
     return colorMap.at(color);
 }
 
-void Xwindow::fillRectangle(int x, int y, int width, int height, unsigned long color) {
-    XSetForeground(d, gc, color);
+void Xwindow::fillRectangle(int x, int y, int width, int height, int color) {
+    XSetForeground(d, gc, getColor(color));
     XFillRectangle(d, w, gc, x, y, width, height);
     XSetForeground(d, gc, Black);
 }
 
-void Xwindow::drawString(int x, int y, std::string msg) {
+void Xwindow::drawString(int x, int y, std::string msg, int color) {
+    XSetForeground(d, gc, getColor(color));
     XDrawString(d, w, DefaultGC(d, s), x, y, msg.c_str(), msg.length());
+    XSetForeground(d, gc, Black);
 }
 
