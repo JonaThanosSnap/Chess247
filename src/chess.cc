@@ -52,3 +52,7 @@ Player* Chess::getPlayer(Team team) noexcept {
 Board* Chess::getBoard() noexcept {
     return &board;
 }
+
+bool Chess::getIsGameStarted() const noexcept {
+    return isGameStarted;
+}

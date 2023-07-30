@@ -27,6 +27,7 @@ class Chess {
         void setupSetCurrentTeam(Team team) noexcept;
         Player* getPlayer(Team team) noexcept;
         Board* getBoard() noexcept;
+        bool getIsGameStarted() const noexcept;
 };
 
 #endif

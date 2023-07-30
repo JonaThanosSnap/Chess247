@@ -3,6 +3,7 @@
 #include <memory>
 #include <stdexcept>
 #include <vector>
+#include <iostream>
 #include "piece.h"
 #include "team.h"
 #include "coordinate.h"

@@ -10,6 +10,7 @@ private:
 public:
     InputManager(Chess*);
     void handleInput();
+    void setupMode();
 };
 
 #endif

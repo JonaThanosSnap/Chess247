@@ -84,6 +84,31 @@ void Board::makeMove(Coordinate s, Coordinate d) {
             }
             enPassantVictim = EMPTY_COORDS;
         }
+
+        if((piece.getTeam() == Team::White && d.y() == 7) || (piece.getTeam() == Team::Black && d.y() == 0)){
+            char promotion;
+
+            std::cin >> promotion;
+
+            switch(promotion) {
+
+                case('q'):
+                    setSquare(d, Piece::Queen(piece.getTeam()));
+                    break;
+                case('r'):
+                    setSquare(d, Piece::Rook(piece.getTeam()));
+                    break;
+                case('b'):
+                    setSquare(d, Piece::Bishop(piece.getTeam()));
+                    break;
+                case('n'):
+                    setSquare(d, Piece::Knight(piece.getTeam()));
+                    break;
+                default:
+                    throw InvalidPromotionException();
+                    break;
+            }
+        }
     }
 
     if(piece.getType() != Piece::Type::Pawn) {
