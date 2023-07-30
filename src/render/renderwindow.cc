@@ -15,9 +15,11 @@ void RenderWindow::render() {
 
     // Draw board
     for (int i = 0; i < 8; i++) {
-        // TODO draw rank
+        // Draw rank
+        std::string rank = std::to_string(8 - i);
+        window.drawString(BOARD_MARGIN/2, BOARD_TOP_LEFT.y() + SQUARE_W/2 + SQUARE_W*i, rank);
 
-        for (int j=0; j < 8; j++) {
+        for (int j = 0; j < 8; j++) {
             Coordinate c{j, 7-i};
             Piece piece = board->getSquare(c);
             
@@ -27,7 +29,11 @@ void RenderWindow::render() {
         }
     }
     
-    // TODO draw file
+    // Draw file
+    for (int j = 0; j < 8; j++) {
+        std::string file{(char)('a' + j)};
+        window.drawString(BOARD_MARGIN + SQUARE_W/2 + SQUARE_W*j, BOARD_TOP_LEFT.y() + BOARD_W + BOARD_MARGIN/2, file);
+    }
 }
 
 unsigned long RenderWindow::getColor(Color color) const {
