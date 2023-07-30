@@ -6,9 +6,12 @@
 class Player {
 protected:
     int score=0;
-    bool isHuman;
+    bool isHuman=false;
 public:
-    virtual std::pair<Coordinate, Coordinate> getMove() {return std::make_pair(Coordinate{-1, -1}, Coordinate{-1, -1});};
+    virtual ~Player() {};
+    virtual std::pair<Coordinate, Coordinate> getMove() {
+        return std::make_pair(Coordinate{-1, -1}, Coordinate{-1, -1});
+    };
     bool isHumanPlayer() const {
         return isHuman;
     }

@@ -81,18 +81,16 @@ void InputManager::handleInput() {
         if (isHuman) {
             std::string start, dest;
 
-            while (std::cin >> start >> dest) {
-                try {
-                    // if coordinates are malformed, we need to catch this
-                    Coordinate s{start};
-                    Coordinate e{dest};
+            std::cin >> start >> dest;
+            try {
+                // if coordinates are malformed, we need to catch this
+                Coordinate s{start};
+                Coordinate e{dest};
 
-                    game->makeMove(s, e);
-                    break;
-                } catch (std::exception& e) {
-                    std::cout << "Your move could not be made. Try again." << std::endl;
-                    std::cout << e.what() << std::endl;
-                }
+                game->makeMove(s, e);
+            } catch (std::exception& e) {
+                std::cout << "Your move could not be made. Try again." << std::endl;
+                std::cout << e.what() << std::endl;
             }
         } else {
             std::pair<Coordinate, Coordinate> move = currentPlayer->getMove();

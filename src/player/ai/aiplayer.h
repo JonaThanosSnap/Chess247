@@ -8,6 +8,7 @@
 class AIPlayer : public Player {
 protected:
     Board* board;
+public:
     AIPlayer(Board* board): board{board} {
         isHuman = false;
     };
