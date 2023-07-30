@@ -17,7 +17,7 @@ void RenderWindow::render() {
     for (int i = 0; i < 8; i++) {
         // Draw rank
         std::string rank = std::to_string(8 - i);
-        window.drawString(BOARD_MARGIN/2, BOARD_TOP_LEFT.y() + SQUARE_W/2 + SQUARE_W*i, rank, currentTheme.whiteSquareColor);
+        window.drawString(BOARD_MARGIN/2, BOARD_TOP_LEFT.y() + SQUARE_W/2 + SQUARE_W*i, rank, currentTheme.textColor);
 
         for (int j = 0; j < 8; j++) {
             Coordinate c{j, 7-i};
@@ -32,6 +32,6 @@ void RenderWindow::render() {
     // Draw file
     for (int j = 0; j < 8; j++) {
         std::string file{(char)('a' + j)};
-        window.drawString(BOARD_MARGIN + SQUARE_W/2 + SQUARE_W*j, BOARD_TOP_LEFT.y() + BOARD_W + BOARD_MARGIN/2, file, currentTheme.whiteSquareColor);
+        window.drawString(BOARD_MARGIN + SQUARE_W/2 + SQUARE_W*j, BOARD_TOP_LEFT.y() + BOARD_W + BOARD_MARGIN/2, file, currentTheme.textColor);
     }
 }

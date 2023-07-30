@@ -25,6 +25,7 @@ struct BoardTheme {
     Color blackSquareColor;
     Color whiteSquareColor;
     Color bgColor;
+    Color textColor;
 };
 
 class RenderWindow : public ChessRender {
@@ -33,7 +34,8 @@ class RenderWindow : public ChessRender {
     BoardTheme currentTheme = BoardTheme{
         Color::ChessDotComBlack,
         Color::ChessDotComWhite,
-        Color::ChessDotComBg
+        Color::ChessDotComBg,
+        Color::ChessDotComWhite
     };
 
     public:
