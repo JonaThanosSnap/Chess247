@@ -1,6 +1,8 @@
 #ifndef INPUT_MANAGER_H_
 #define INPUT_MANAGER_H_
 
+#include "setupmode.h"
+
 class Chess;
 
 // translates inputs into commands for chess game
@@ -10,7 +12,6 @@ private:
 public:
     InputManager(Chess*);
     void handleInput();
-    void setupMode();
 };
 
 #endif

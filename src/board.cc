@@ -498,3 +498,27 @@ bool Board::isInCheck(Team threatenedTeam) const noexcept {
     Coordinate kingCoords = getKingCoords(threatenedTeam);
     return isSquareThreatened(threatenedTeam, kingCoords);
 }
+
+bool Board::pawnOnLastRow(){
+    for(int i = 0; i < BOARD_WIDTH; i++) {
+        if(grid[0][i] == Piece::Pawn(Team::Black) || grid[7][i] == Piece::Pawn(Team::White)){
+            return true;
+        }
+    }
+    return false;
+}
+bool Board::correctNumberOfKings(){
+    int whiteKingCount = 0;
+    int blackKingCount = 0;
+    for(int i = 0; i < BOARD_WIDTH; i++) {
+        for(int j = 0; j < BOARD_WIDTH; j++) {
+            if(grid[i][j] == Piece::King(Team::White)){
+                whiteKingCount++;
+            }
+            if(grid[i][j] == Piece::King(Team::Black)){
+                blackKingCount++;
+            }
+        }
+    }
+    return whiteKingCount == 1 && blackKingCount == 1;
+}
