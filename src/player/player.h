@@ -4,10 +4,14 @@
 #include "../coordinate.h"
 
 class Player {
-private:
+protected:
     int score=0;
+    bool isHuman;
 public:
-    // virtual std::pair<Coordinate, Coordinate> getMove() {};
+    virtual std::pair<Coordinate, Coordinate> getMove() {return std::make_pair(Coordinate{-1, -1}, Coordinate{-1, -1});};
+    bool isHumanPlayer() const {
+        return isHuman;
+    }
 };
 
 #endif

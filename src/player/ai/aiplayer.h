@@ -7,8 +7,10 @@
 // includes reference to a board
 class AIPlayer : public Player {
 protected:
-    Board& board;
-    AIPlayer(Board& board): board{board} {};
+    Board* board;
+    AIPlayer(Board* board): board{board} {
+        isHuman = false;
+    };
 };
 
 #endif

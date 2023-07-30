@@ -6,7 +6,7 @@
 
 class AIPlayerLevel1 : public AIPlayer {
 public:
-    AIPlayerLevel1(Board&);
+    AIPlayerLevel1(Board*);
     // std::pair<Coordinate, Coordinate> getMove() override;
 };
 
