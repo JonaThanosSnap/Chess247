@@ -1,27 +1,38 @@
 #ifndef BOARD_H_
 #define BOARD_H_
-#include <vector>
 #include <memory>
 #include <stdexcept>
-#include "piece/piece.h"
+#include <vector>
+#include "piece.h"
+#include "team.h"
 #include "coordinate.h"
 
-class Board {
-    std::unique_ptr<Piece> grid[8][8];
+const int BOARD_WIDTH = 8;
 
-    bool coordsInRange(Coordinate p);
+class Board {
+    Piece grid[BOARD_WIDTH][BOARD_WIDTH];
+
+    bool coordsInRange(Coordinate p) const noexcept;
+    Team getEnemyTeam(Team team) const noexcept;
+    Coordinate getKingCoords(Team team) const noexcept;
+    std::vector<Coordinate> getPieceCoords(Team team) const noexcept;
+    bool isSquareThreatened(Team threatenedTeam, Coordinate p) const noexcept;
+    bool isInCheck(Team threatenedTeam) const noexcept;
+
+    std::vector<Coordinate> getValidMoves(Coordinate p) const;
+    std::vector<Coordinate> getValidMovesPawn(Coordinate p) const;
+    std::vector<Coordinate> getValidMovesRook(Coordinate p) const;
+    std::vector<Coordinate> getValidMovesKnight(Coordinate p) const;
+    std::vector<Coordinate> getValidMovesBishop(Coordinate p) const;
+    std::vector<Coordinate> getValidMovesQueen(Coordinate p) const;
+    std::vector<Coordinate> getValidMovesKing(Coordinate p) const;
 
     public:
         Board();
-
-        template<typename P> void setSquare(Coordinate p);
+        void setSquare(Coordinate p, Piece piece);
         void clearSquare(Coordinate p);
-        bool isValidMove(Coordinate s, Coordinate d);
+        Piece getSquare(Coordinate p) const noexcept;
+        bool isValidMove(Coordinate s, Coordinate d) const;
 };
-
-template <typename P> void Board::setSquare(Coordinate p) {
-    if (!coordsInRange(p)) throw std::out_of_range("Board::setSquare: coords out of range");
-    // TODO
-}
 
 #endif
