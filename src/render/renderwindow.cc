@@ -32,6 +32,6 @@ void RenderWindow::render() {
     // Draw file
     for (int j = 0; j < 8; j++) {
         std::string file{(char)('a' + j)};
-        window.drawString(BOARD_MARGIN + SQUARE_W/2 + SQUARE_W*j, BOARD_TOP_LEFT.y() + BOARD_W + BOARD_MARGIN/2, file, currentTheme.blackSquareColor);
+        window.drawString(BOARD_MARGIN + SQUARE_W/2 + SQUARE_W*j, BOARD_TOP_LEFT.y() + BOARD_W + BOARD_MARGIN/2, file, currentTheme.whiteSquareColor);
     }
 }
