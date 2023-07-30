@@ -12,6 +12,7 @@
 InputManager::InputManager(Chess* chess): game{chess} {};
 
 void InputManager::handleInput() {
+    // std::cout << "hi";
     // read in one command at a time and handle it
     std::string cmd;
     std::cin >> cmd;
