@@ -64,6 +64,7 @@ void InputManager::handleInput() {
         //         std::cout << "This is not a valid option for black. Valid options: human, computer<1-4>." << std::endl;
         //     }
         // }
+
         game->startGame();
 
     } else if (cmd == "resign") {
@@ -81,6 +82,7 @@ void InputManager::handleInput() {
                 Coordinate e{dest};
 
                 game->makeMove(s, e);
+
                 break;
             } catch (...) {
                 std::cout << "Your move could not be made. Try again." << std::endl;
