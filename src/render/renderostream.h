@@ -15,10 +15,7 @@ public:
     // you may only construct a RenderOStream given a
     // board to reference and ostream to print to
     RenderOStream(Board* board, std::ostream&);
-    void render() const override;
-    // determine if a given square should be rendered as 
-    //  blank vs underscore(_)
-    bool isWhite(const Coordinate&) const;
+    void render() override;
     char getPieceChar(const Piece&) const;
 };
 

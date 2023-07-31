@@ -64,6 +64,7 @@ void InputManager::handleInput() {
         //         std::cout << "This is not a valid option for black. Valid options: human, computer<1-4>." << std::endl;
         //     }
         // }
+
         game->startGame();
 
     } else if (cmd == "resign") {
@@ -73,7 +74,6 @@ void InputManager::handleInput() {
     } else if (cmd == "move") {
         // make a move
         std::string start, dest;
-
         std::cin >> start >> dest;
         try {
             // if coordinates are malformed, we need to catch this

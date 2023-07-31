@@ -1,4 +1,5 @@
 #include <iostream>
+#include "render/renderwindow.h"
 #include "render/renderostream.h"
 #include "chess.h"
 #include "exception.h"
