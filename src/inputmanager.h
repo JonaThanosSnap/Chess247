@@ -13,7 +13,7 @@ private:
     void enterSetupMode();
 public:
     InputManager(Chess*, ChessRender*);
-    void handleInput();
+    int handleInput();
 };
 
 #endif

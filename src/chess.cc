@@ -73,7 +73,27 @@ bool Chess::getIsGameStarted() const noexcept {
 
 std::string Chess::winner() {
     if(board.isCheckMate(currentTeam)){
-        return (currentTeam == Team::White) ? "Black" : "White";
+        Team loser = currentTeam;
+        scores[loser == Team::White ? 1 : 0] += 1;
+        return (loser == Team::White) ? "Black" : "White";
     };
     return "";
+}
+
+
+Team Chess::resign(){
+    Team loser = currentTeam;
+    scores[loser == Team::White ? 1 : 0] += 1;
+    endGame();
+    return (loser == Team::White) ? Team::Black : Team::White;
+}
+
+void Chess::boardReset(){
+    board = Board();
+}
+
+void Chess::finalScores(){
+    std::cout << "Final Score:" << std::endl;
+    std::cout << "White: " << scores[0] << std::endl;
+    std::cout << "Black: " << scores[1] << std::endl;
 }

@@ -16,6 +16,7 @@ class Chess {
     Team currentTeam = Team::White;
 
     std::map<Team, std::unique_ptr<Player>> players;
+    std::vector<int> scores = {0,0}; // white, black
 
     public:
         void startGame() noexcept;
@@ -32,6 +33,9 @@ class Chess {
         Board* getBoard() noexcept;
         bool getIsGameStarted() const noexcept;
         std::string winner();
+        Team resign();
+        void boardReset();
+        void finalScores();
 };
 
 #endif

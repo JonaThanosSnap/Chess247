@@ -241,7 +241,11 @@ std::vector<Coordinate> Board::getValidMovesPawn(Coordinate p) const {
     std::vector<Coordinate> deltas = {Coordinate{0, team == Team::White ? 1 : -1}};
 
     if(!getSquare(p).getHasMoved()){
-        deltas.push_back(Coordinate{0, team == Team::White ? 2 : -2});
+        Coordinate inFront = p + deltas[0];
+        Coordinate inFront2 = inFront + deltas[0];
+        if(getSquare(inFront) == Piece::Empty() && getSquare(inFront2) == Piece::Empty()){
+            deltas.push_back(Coordinate{0, team == Team::White ? 2 : -2});
+        } 
     }
 
     for(Coordinate delta : deltas){
@@ -437,7 +441,7 @@ std::vector<Coordinate> Board::getValidMovesKing(Coordinate p) const {
         Piece queenSideRook = getSquare(queenSideRookLocation);
         bool canCastle = true;
 
-        if(!kingSideRook.getHasMoved()) {
+        if(!kingSideRook.getHasMoved() && getSquare(kingSideRookLocation) == Piece::Rook(team)) {
             // check if there are any pieces between the king and the king side rook
             for(int x = p.x() + 1; x < kingSideRookLocation.x(); x++) {
                 if(getSquare(Coordinate(x, rowNum)) != Piece::Empty()){
@@ -452,7 +456,7 @@ std::vector<Coordinate> Board::getValidMovesKing(Coordinate p) const {
 
         canCastle = true;
 
-        if(!queenSideRook.getHasMoved()){
+        if(!queenSideRook.getHasMoved() && getSquare(queenSideRookLocation) == Piece::Rook(team)){
             // check if there are any pieces between the king and the queen side rook
             for(int x = p.x() - 1; x > 0; x--) {
                 if(getSquare(Coordinate(x, rowNum)) != Piece::Empty()){

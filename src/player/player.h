@@ -17,6 +17,9 @@ public:
     bool isHumanPlayer() const {
         return isHuman;
     }
+    Team getTeam() const {
+        return team;
+    }
 };
 
 #endif

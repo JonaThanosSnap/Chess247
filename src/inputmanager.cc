@@ -11,13 +11,15 @@
 
 InputManager::InputManager(Chess* chess, ChessRender* chessRender): game{chess}, render{chessRender} {};
 
-void InputManager::handleInput() {
+int InputManager::handleInput() {
     // std::cout << "hi";
     // read in one command at a time and handle it
     std::string cmd;
     std::cin >> cmd;
 
     if (cmd == "game") {
+
+        game->boardReset();
         // start a new game
         std::string white, black;
         // std::cout << "Enter a player type for white: ";
@@ -68,8 +70,10 @@ void InputManager::handleInput() {
         game->startGame();
 
     } else if (cmd == "resign") {
-        // concede game to opponent
-        // game->resign???
+        Team loser = game->resign();
+        std::cout << (loser == Team::White ? "White" : "Black") << " wins!" << std::endl;
+        
+        return 0;
 
     } else if (cmd == "move") {
         // move pieces depending on the current player's turn.
@@ -100,7 +104,7 @@ void InputManager::handleInput() {
         if(game->winner() != "") {
             std::cout << "Checkmate! " << game->winner() << " wins!" << std::endl;
             game->endGame();
-            return;
+            return 0;
         }
 
         // TODO: Coordinate constructor needs to fail
@@ -112,10 +116,13 @@ void InputManager::handleInput() {
         else{
             std::cout << "Cannot enter setup mode while game is in progress." << std::endl;
         }
-
     } else {
+        if (std::cin.eof()) {
+            return 1;
+        } 
         std::cout << "Invalid command: " << cmd << std::endl;
     }
+    return 0;
 }
 
 void InputManager::enterSetupMode(){
