@@ -28,7 +28,7 @@ void InputManager::handleInput() {
                 game->setPlayer(Team::White, new HumanPlayer{});
                 break;
             } else if (white == "computer1") {
-                game->setPlayer(Team::White, new AIPlayerLevel1{game->getBoard()});
+                game->setPlayer(Team::White, new AIPlayerLevel1{game->getBoard(), Team::White});
                 break;
             // } else if (white == "computer2") {
             //     game->setPlayer(Team::White, new AIPlayerLevel2{game->getBoard()});
@@ -50,7 +50,7 @@ void InputManager::handleInput() {
                 game->setPlayer(Team::Black, new HumanPlayer{});
                 break;
             } else if (black == "computer1") {
-                game->setPlayer(Team::Black, new AIPlayerLevel1{game->getBoard()});
+                game->setPlayer(Team::Black, new AIPlayerLevel1{game->getBoard(), Team::Black});
                 break;
             // } else if (black == "computer2") {
             //     game->setPlayer(Team::Black, new AIPlayerLevel2{game->getBoard()});
