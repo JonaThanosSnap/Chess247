@@ -33,9 +33,9 @@ void InputManager::handleInput() {
             } else if (white == "computer2") {
                 game->setPlayer(Team::White, new AIPlayerLevel2{game->getBoard(), Team::White});
                 break;
-            // } else if (white == "computer3") {
-            //     game->setPlayer(Team::White, new AIPlayerLevel3{game->getBoard()});
-            //     break;
+            } else if (white == "computer3") {
+                game->setPlayer(Team::White, new AIPlayerLevel3{game->getBoard(), Team::White});
+                break;
             // } else if (white == "computer4") {
             //     game->setPlayer(Team::White, new AIPlayerLevel4{game->getBoard()});
             //     break;
@@ -55,9 +55,9 @@ void InputManager::handleInput() {
             } else if (black == "computer2") {
                 game->setPlayer(Team::Black, new AIPlayerLevel2{game->getBoard(), Team::Black});
                 break;
-            // } else if (black == "computer3") {
-            //     game->setPlayer(Team::Black, new AIPlayerLevel3{game->getBoard()});
-            //     break;
+            } else if (black == "computer3") {
+                game->setPlayer(Team::Black, new AIPlayerLevel3{game->getBoard(), Team::Black});
+                break;
             // } else if (black == "computer4") {
             //     game->setPlayer(Team::Black, new AIPlayerLevel4{game->getBoard()});
             //     break;

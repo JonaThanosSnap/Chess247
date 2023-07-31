@@ -35,7 +35,6 @@ std::pair<Coordinate, Coordinate> AIPlayerLevel2::getMove() {
                 // if this move captures or checks, prefer it
 
                 if (board->getSquare(v).getType() != Piece::Type::None && board->getSquare(v).getTeam() != team) {
-                    // std::cout << static_cast<std::underlying_type<Piece::Type>::type>(board->getSquare(v).getType()) << std::endl;
                     preferredMoves.push_back(std::make_pair(currSquare, v));
                 } else if (board->isCheckingMove(currSquare, v)) {
                     preferredMoves.push_back(std::make_pair(currSquare, v));
