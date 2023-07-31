@@ -45,6 +45,10 @@ void Chess::setupSetCurrentTeam(Team team) noexcept {
     currentTeam = team;
 }
 
+void Chess::setPlayer(Team team, Player* player) noexcept {
+    players[team] = std::unique_ptr<Player>(player);
+}
+
 Player* Chess::getPlayer(Team team) noexcept {
     auto playerItr = players.find(team);
     if (playerItr == players.end()) {
@@ -52,6 +56,11 @@ Player* Chess::getPlayer(Team team) noexcept {
     } else {
         return playerItr->second.get();
     }
+}
+
+
+Player* Chess::getCurrentPlayer() noexcept {
+    return getPlayer(currentTeam);
 }
 
 Board* Chess::getBoard() noexcept {

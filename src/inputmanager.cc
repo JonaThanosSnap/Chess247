@@ -12,59 +12,59 @@
 InputManager::InputManager(Chess* chess, ChessRender* chessRender): game{chess}, render{chessRender} {};
 
 void InputManager::handleInput() {
+    // std::cout << "hi";
     // read in one command at a time and handle it
     std::string cmd;
     std::cin >> cmd;
 
     if (cmd == "game") {
         // start a new game
-        // std::string white, black;
+        std::string white, black;
         // std::cout << "Enter a player type for white: ";
 
-        // while (std::cin >> white) {
-        //     // ensure player type input is wellformed
-        //     if (white == "human") {
-        //         game->setPlayer1(new HumanPlayer{});
-        //         break;
-        //     } else if (white == "computer1") {
-        //         game->setPlayer1(new AIPlayerLevel1{});
-        //         break;
-        //     } else if (white == "computer2") {
-        //         game->setPlayer1(new AIPlayerLevel2{});
-        //         break;
-        //     } else if (white == "computer3") {
-        //         game->setPlayer1(new AIPlayerLevel3{});
-        //         break;
-        //     } else if (white == "computer4") {
-        //         game->setPlayer1(new AIPlayerLevel4{});
-        //         break;
-        //     } else {
-        //         std::cout << "This is not a valid option for white. Valid options: human, computer<1-4>." << std::endl;
-        //     }
-        // }
+        while (std::cin >> white) {
+            // ensure player type input is wellformed
+            if (white == "human") {
+                game->setPlayer(Team::White, new HumanPlayer{});
+                break;
+            } else if (white == "computer1") {
+                game->setPlayer(Team::White, new AIPlayerLevel1{game->getBoard(), Team::White});
+                break;
+            } else if (white == "computer2") {
+                game->setPlayer(Team::White, new AIPlayerLevel2{game->getBoard(), Team::White});
+                break;
+            } else if (white == "computer3") {
+                game->setPlayer(Team::White, new AIPlayerLevel3{game->getBoard(), Team::White});
+                break;
+            // } else if (white == "computer4") {
+            //     game->setPlayer(Team::White, new AIPlayerLevel4{game->getBoard()});
+            //     break;
+            } else {
+                std::cout << "This is not a valid option for white. Valid options: human, computer<1-4>." << std::endl;
+            }
+        }
 
         // std::cout << "Enter a player type for black: ";
-        // while (std::cin >> black) {
-        //     if (black == "human") {
-        //         game->setPlayer2(new HumanPlayer{});
-        //         break;
-        //     } else if (black == "computer1") {
-        //         game->setPlayer2(new AIPlayerLevel1{});
-        //         break;
-        //     } else if (black == "computer2") {
-        //         game->setPlayer2(new AIPlayerLevel2{});
-        //         break;
-        //     } else if (black == "computer3") {
-        //         game->setPlayer2(new AIPlayerLevel3{});
-        //         break;
-        //     } else if (black == "computer4") {
-        //         game->setPlayer2(new AIPlayerLevel4{});
-        //         break;
-        //     } else {
-        //         std::cout << "This is not a valid option for black. Valid options: human, computer<1-4>." << std::endl;
-        //     }
-        // }
-
+        while (std::cin >> black) {
+            if (black == "human") {
+                game->setPlayer(Team::Black, new HumanPlayer{});
+                break;
+            } else if (black == "computer1") {
+                game->setPlayer(Team::Black, new AIPlayerLevel1{game->getBoard(), Team::Black});
+                break;
+            } else if (black == "computer2") {
+                game->setPlayer(Team::Black, new AIPlayerLevel2{game->getBoard(), Team::Black});
+                break;
+            } else if (black == "computer3") {
+                game->setPlayer(Team::Black, new AIPlayerLevel3{game->getBoard(), Team::Black});
+                break;
+            // } else if (black == "computer4") {
+            //     game->setPlayer(Team::Black, new AIPlayerLevel4{game->getBoard()});
+            //     break;
+            } else {
+                std::cout << "This is not a valid option for black. Valid options: human, computer<1-4>." << std::endl;
+            }
+        }
         game->startGame();
 
     } else if (cmd == "resign") {
@@ -72,24 +72,35 @@ void InputManager::handleInput() {
         // game->resign???
 
     } else if (cmd == "move") {
-        // make a move
-        std::string start, dest;
-        std::cin >> start >> dest;
-        try {
-            // if coordinates are malformed, we need to catch this
-            Coordinate s{start};
-            Coordinate e{dest};
+        // move pieces depending on the current player's turn.
+        // if human player, they need to enter start/dest coords.
+        // if ai player, the move command is enough
+        Player* currentPlayer = game->getCurrentPlayer();
+        bool isHuman = currentPlayer->isHumanPlayer();
 
-            game->makeMove(s, e);
+        if (isHuman) {
+            std::string start, dest;
 
-            if(game->winner() != "") {
-                std::cout << "Checkmate! " << game->winner() << " wins!" << std::endl;
-                game->endGame();
-                return;
+            std::cin >> start >> dest;
+            try {
+                // if coordinates are malformed, we need to catch this
+                Coordinate s{start};
+                Coordinate e{dest};
+
+                game->makeMove(s, e);
+            } catch (std::exception& e) {
+                std::cout << "Your move could not be made. Try again." << std::endl;
+                std::cout << e.what() << std::endl;
             }
+        } else {
+            std::pair<Coordinate, Coordinate> move = currentPlayer->getMove();
+            game->makeMove(move.first, move.second);
+        }
 
-        } catch (...) {
-            std::cout << "Your move could not be made. Try again." << std::endl;
+        if(game->winner() != "") {
+            std::cout << "Checkmate! " << game->winner() << " wins!" << std::endl;
+            game->endGame();
+            return;
         }
 
         // TODO: Coordinate constructor needs to fail

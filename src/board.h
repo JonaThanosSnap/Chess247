@@ -21,9 +21,8 @@ class Board {
     Team getEnemyTeam(Team team) const noexcept;
     Coordinate getKingCoords(Team team) const noexcept;
     std::vector<Coordinate> getPieceCoords(Team team) const noexcept;
-    bool isSquareThreatened(Team threatenedTeam, Coordinate p) const noexcept;
+    bool isInCheck(Team threatenedTeam) const noexcept;
 
-    std::vector<Coordinate> getValidMoves(Coordinate p) const;
     std::vector<Coordinate> getValidMovesPawn(Coordinate p) const;
     std::vector<Coordinate> getValidMovesRook(Coordinate p) const;
     std::vector<Coordinate> getValidMovesKnight(Coordinate p) const;
@@ -39,12 +38,15 @@ class Board {
         void setSquare(Coordinate p, Piece piece);
         void clearSquare(Coordinate p);
         void promote(Coordinate p);
-        Piece getSquare(Coordinate p) const noexcept;
+        Piece getSquare(Coordinate p) const;
+        bool isSquareThreatened(Team threatenedTeam, Coordinate p) const noexcept;
         bool isValidMove(Coordinate s, Coordinate d) const;
         bool isInCheck(Team threatenedTeam) const noexcept;
         bool pawnOnLastRow();
         bool correctNumberOfKings();
         bool isCheckMate(Team threatenedTeam);
+        bool isCheckingMove(Coordinate s, Coordinate d) const;
+        std::vector<Coordinate> getValidMoves(Coordinate p) const;
 };
 
 #endif

@@ -3,7 +3,9 @@
 #include "aiplayer.h"
 
 class AIPlayerLevel3 : public AIPlayer {
-
+public:
+    AIPlayerLevel3(Board*, Team);
+    std::pair<Coordinate, Coordinate> getMove() override;
 };
 
 #endif

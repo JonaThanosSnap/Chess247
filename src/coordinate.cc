@@ -12,7 +12,7 @@ Coordinate::Coordinate(std::string p): _x{p[0]-'a'}, _y{p[1]-'1'} {}
 
 std::string Coordinate::toString() const noexcept{
     char letter = 'a' + _x;
-    std::string result = letter + std::to_string(_y);
+    std::string result = letter + std::to_string(_y+1);
     return result;
 }
 

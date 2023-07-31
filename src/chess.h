@@ -26,7 +26,9 @@ class Chess {
         void setupPlacePiece(Coordinate p, Piece piece);
         void setupRemovePiece(Coordinate p);
         void setupSetCurrentTeam(Team team) noexcept;
+        void setPlayer(Team team, Player*) noexcept;
         Player* getPlayer(Team team) noexcept;
+        Player* getCurrentPlayer() noexcept;
         Board* getBoard() noexcept;
         bool getIsGameStarted() const noexcept;
         std::string winner();
