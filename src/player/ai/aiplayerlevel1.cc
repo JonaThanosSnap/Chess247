@@ -34,12 +34,12 @@ std::pair<Coordinate, Coordinate> AIPlayerLevel1::getMove() {
         }
     }
 
+    srand(time(0));
+
     std::pair<Coordinate, Coordinate> move = possibleMoves[rand() % possibleMoves.size()];
     while (!board->isValidMove(move.first, move.second)) {
         move = possibleMoves[rand() % possibleMoves.size()];
     }
-
-    // std::cout << move.first.toString() << " " << move.second.toString() << std::endl;
 
     return move;   
 }

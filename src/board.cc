@@ -154,6 +154,26 @@ bool Board::isValidMove(Coordinate s, Coordinate d) const {
     }
 }
 
+// TODO - integrate this into the above function
+bool Board::isCheckingMove(Coordinate s, Coordinate d) const {
+    if (!coordsInRange(s)) throw std::out_of_range("Board::isValidMove: start position out of range");
+    if (!coordsInRange(d)) throw std::out_of_range("Board::isValidMove: end position out of range");
+
+    Piece piece = getSquare(s);
+    Piece::Type pieceType = piece.getType();
+    Team pieceTeam = piece.getTeam();
+
+    // Check if move will put the king in check by simulating the move then rolling back
+    Board mockBoard{*this};
+    mockBoard.clearSquare(s);
+    mockBoard.setSquare(d, piece);
+    if (mockBoard.isInCheck(pieceTeam)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 std::vector<Coordinate> Board::getValidMoves(Coordinate p) const {
     // getValidMoves => first finds all 'possible' moves without considering check.         
 

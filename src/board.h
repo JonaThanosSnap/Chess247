@@ -40,6 +40,7 @@ class Board {
         void promote(Coordinate p);
         Piece getSquare(Coordinate p) const noexcept;
         bool isValidMove(Coordinate s, Coordinate d) const;
+        bool isCheckingMove(Coordinate s, Coordinate d) const;
         std::vector<Coordinate> getValidMoves(Coordinate p) const;
 };
 
