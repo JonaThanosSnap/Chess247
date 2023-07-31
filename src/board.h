@@ -37,7 +37,7 @@ class Board {
         void setSquare(Coordinate p, Piece piece);
         void clearSquare(Coordinate p);
         void promote(Coordinate p);
-        Piece getSquare(Coordinate p) const noexcept;
+        Piece getSquare(Coordinate p) const;
         bool isSquareThreatened(Team threatenedTeam, Coordinate p) const noexcept;
         bool isValidMove(Coordinate s, Coordinate d) const;
         bool isCheckingMove(Coordinate s, Coordinate d) const;
