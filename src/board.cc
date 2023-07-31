@@ -12,22 +12,22 @@ Board::Board() {
 
     // White back-rank pieces
     grid[0][0] = Piece::Rook(Team::White);
-    grid[0][1] = Piece::Bishop(Team::White);
-    grid[0][2] = Piece::Knight(Team::White);
+    grid[0][1] = Piece::Knight(Team::White);
+    grid[0][2] = Piece::Bishop(Team::White);
     grid[0][3] = Piece::Queen(Team::White);
     grid[0][4] = Piece::King(Team::White);
-    grid[0][5] = Piece::Knight(Team::White);
-    grid[0][6] = Piece::Bishop(Team::White);
+    grid[0][5] = Piece::Bishop(Team::White);
+    grid[0][6] = Piece::Knight(Team::White);
     grid[0][7] = Piece::Rook(Team::White);
 
     // Black back-rank pieces
     grid[7][0] = Piece::Rook(Team::Black);
-    grid[7][1] = Piece::Bishop(Team::Black);
-    grid[7][2] = Piece::Knight(Team::Black);
+    grid[7][1] = Piece::Knight(Team::Black);
+    grid[7][2] = Piece::Bishop(Team::Black);
     grid[7][3] = Piece::Queen(Team::Black);
     grid[7][4] = Piece::King(Team::Black);
-    grid[7][5] = Piece::Knight(Team::Black);
-    grid[7][6] = Piece::Bishop(Team::Black);
+    grid[7][5] = Piece::Bishop(Team::Black);
+    grid[7][6] = Piece::Knight(Team::Black);
     grid[7][7] = Piece::Rook(Team::Black);
 
     // history.push_back(*this);
@@ -63,10 +63,6 @@ void Board::makeMove(Coordinate s, Coordinate d) {
         setSquare(d - delta, rookPiece);
         rookPiece.setHasMoved(true);
     }
-
-    // TODO Handle pawn promotion
-
-    // Kill piece if en passant has occurred
 
     // Pawn logic
     if (piece.getType() == Piece::Type::Pawn) {
@@ -499,7 +495,7 @@ bool Board::isInCheck(Team threatenedTeam) const noexcept {
     return isSquareThreatened(threatenedTeam, kingCoords);
 }
 
-bool Board::pawnOnLastRow(){
+bool Board::pawnOnLastRow() {
     for(int i = 0; i < BOARD_WIDTH; i++) {
         if(grid[0][i] == Piece::Pawn(Team::Black) || grid[7][i] == Piece::Pawn(Team::White)){
             return true;
@@ -507,7 +503,7 @@ bool Board::pawnOnLastRow(){
     }
     return false;
 }
-bool Board::correctNumberOfKings(){
+bool Board::correctNumberOfKings() {
     int whiteKingCount = 0;
     int blackKingCount = 0;
     for(int i = 0; i < BOARD_WIDTH; i++) {
@@ -522,3 +518,32 @@ bool Board::correctNumberOfKings(){
     }
     return whiteKingCount == 1 && blackKingCount == 1;
 }
+
+bool Board::isCheckMate(Team threatenedTeam) {
+
+    if(!isInCheck(threatenedTeam)) {
+        return false;
+    }
+    for(int i = 0; i < BOARD_WIDTH; i++) {
+        for(int j = 0; j < BOARD_WIDTH; j++) {
+            // if any piece has a valid move, we are not in checkmate
+            if(grid[i][j].getTeam() == threatenedTeam){
+                std::vector<Coordinate> validMoves = getValidMoves(Coordinate{j,i});
+                for(int k = 0; k < validMoves.size(); k++) {
+                    if(isValidMove(Coordinate{j,i}, validMoves[k])) {
+                        return false;
+                    }
+                }
+            }
+        }
+    }
+    return true;
+}
+
+// e2 e4
+// e7 e5
+// f1 c4
+// b8 c6
+// d1 h5
+// g8 f6
+// h5 f7

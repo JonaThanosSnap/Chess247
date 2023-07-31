@@ -5,6 +5,10 @@ void Chess::startGame() noexcept {
     isGameStarted = true;
 }
 
+void Chess::endGame() noexcept {
+    isGameStarted = false;
+}
+
 void Chess::makeMove(Coordinate s, Coordinate d) {
     if (!board.isValidMove(s, d)) throw InvalidMoveException{};
     if (!isGameStarted) throw GameNotStartedException{};
@@ -15,6 +19,7 @@ void Chess::makeMove(Coordinate s, Coordinate d) {
     board.makeMove(s, d);
 
     currentTeam = (currentTeam == Team::White) ? Team::Black : Team::White;
+
 }
 
 void Chess::setupEnter() noexcept {
@@ -55,4 +60,11 @@ Board* Chess::getBoard() noexcept {
 
 bool Chess::getIsGameStarted() const noexcept {
     return isGameStarted;
+}
+
+std::string Chess::winner() {
+    if(board.isCheckMate(currentTeam)){
+        return (currentTeam == Team::White) ? "Black" : "White";
+    };
+    return "";
 }

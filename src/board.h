@@ -44,6 +44,7 @@ class Board {
         bool isInCheck(Team threatenedTeam) const noexcept;
         bool pawnOnLastRow();
         bool correctNumberOfKings();
+        bool isCheckMate(Team threatenedTeam);
 };
 
 #endif
