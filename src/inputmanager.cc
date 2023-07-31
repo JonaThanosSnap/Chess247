@@ -9,7 +9,7 @@
 #include <string>
 #include <iostream>
 
-InputManager::InputManager(Chess* chess): game{chess} {};
+InputManager::InputManager(Chess* chess, ChessRender* chessRender): game{chess}, render{chessRender} {};
 
 void InputManager::handleInput() {
     // read in one command at a time and handle it
@@ -150,7 +150,7 @@ void InputManager::enterSetupMode(){
             }
             game->setupPlacePiece(location, newPiece);
 
-            //TODO: Rerender the board
+            render->render();
         }
         else if(cmd == "-"){
             std::string coord;
@@ -161,7 +161,7 @@ void InputManager::enterSetupMode(){
 
             game->setupRemovePiece(location);
 
-            //TODO: rerender the baord
+            render->render();
         }
 
         else if(cmd == "="){
