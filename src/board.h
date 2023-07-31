@@ -21,7 +21,6 @@ class Board {
     Team getEnemyTeam(Team team) const noexcept;
     Coordinate getKingCoords(Team team) const noexcept;
     std::vector<Coordinate> getPieceCoords(Team team) const noexcept;
-    bool isInCheck(Team threatenedTeam) const noexcept;
 
     std::vector<Coordinate> getValidMovesPawn(Coordinate p) const;
     std::vector<Coordinate> getValidMovesRook(Coordinate p) const;

@@ -7,7 +7,8 @@
 
 int main() {
     Chess chess;
-    RenderOStream render{chess.getBoard(), std::cout};
+    // RenderOStream render{chess.getBoard(), std::cout};
+    RenderWindow render{chess.getBoard()}:
     InputManager inputManager{&chess, &render};
 
     // chess.startGame();
