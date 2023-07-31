@@ -22,7 +22,7 @@ class Piece {
         Type getType() const noexcept;
         Team getTeam() const noexcept;
         void setHasMoved(bool value) noexcept;
-        void setCanBeEnPassented(bool value) noexcept;
+        bool getHasMoved() const noexcept;
 
         static Piece Empty();
         static Piece Pawn(Team team);
@@ -41,7 +41,6 @@ class Piece {
         Team team;
 
         bool hasMoved = false;
-        bool canBeEnPassanted = false;
 
         // This is private to prevent FORGERY
         Piece(Type type, Team team);

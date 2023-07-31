@@ -3,21 +3,25 @@
 #include <memory>
 #include <stdexcept>
 #include <vector>
+#include <iostream>
 #include "piece.h"
 #include "team.h"
 #include "coordinate.h"
 
 const int BOARD_WIDTH = 8;
+const Coordinate EMPTY_COORDS = Coordinate{-1, -1};
 
 class Board {
     Piece grid[BOARD_WIDTH][BOARD_WIDTH];
+    Coordinate enPassantVictim = EMPTY_COORDS;
+
+    // TODO stack of each move taken so far
 
     bool coordsInRange(Coordinate p) const noexcept;
     Team getEnemyTeam(Team team) const noexcept;
     Coordinate getKingCoords(Team team) const noexcept;
     std::vector<Coordinate> getPieceCoords(Team team) const noexcept;
     bool isSquareThreatened(Team threatenedTeam, Coordinate p) const noexcept;
-    bool isInCheck(Team threatenedTeam) const noexcept;
 
     std::vector<Coordinate> getValidMoves(Coordinate p) const;
     std::vector<Coordinate> getValidMovesPawn(Coordinate p) const;
@@ -27,12 +31,20 @@ class Board {
     std::vector<Coordinate> getValidMovesQueen(Coordinate p) const;
     std::vector<Coordinate> getValidMovesKing(Coordinate p) const;
 
+    void notifyPromotion() const noexcept;
+
     public:
         Board();
+        void makeMove(Coordinate s, Coordinate d);
         void setSquare(Coordinate p, Piece piece);
         void clearSquare(Coordinate p);
+        void promote(Coordinate p);
         Piece getSquare(Coordinate p) const noexcept;
         bool isValidMove(Coordinate s, Coordinate d) const;
+        bool isInCheck(Team threatenedTeam) const noexcept;
+        bool pawnOnLastRow();
+        bool correctNumberOfKings();
+        bool isCheckMate(Team threatenedTeam);
 };
 
 #endif
