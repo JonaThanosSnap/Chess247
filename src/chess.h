@@ -19,6 +19,7 @@ class Chess {
 
     public:
         void startGame() noexcept;
+        void endGame() noexcept;
         void makeMove(Coordinate s, Coordinate d);
         void setupEnter() noexcept;
         void setupExit() noexcept;
@@ -29,6 +30,8 @@ class Chess {
         Player* getPlayer(Team team) noexcept;
         Player* getCurrentPlayer() noexcept;
         Board* getBoard() noexcept;
+        bool getIsGameStarted() const noexcept;
+        std::string winner();
 };
 
 #endif

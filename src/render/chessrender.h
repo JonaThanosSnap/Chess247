@@ -3,14 +3,18 @@
 
 // forward declaration for board ptr
 class Board;
+class Coordinate;
 
 class ChessRender {
 protected:
     // protect both memory address and changes to board
     const Board* const board;
+    // check if a square is white or black
+    bool isWhite(const Coordinate&) const;
 public:
     ChessRender(Board*);
-    virtual void render() const = 0;
+    virtual ~ChessRender();
+    virtual void render() = 0;
 };
 
 #endif

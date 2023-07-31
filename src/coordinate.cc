@@ -41,6 +41,10 @@ Coordinate Coordinate::operator-(const Coordinate& other) const noexcept {
     return Coordinate{_x - other._x, _y - other._y};
 }
 
+Coordinate Coordinate::operator*(int scalar) const noexcept {
+    return Coordinate{_x*scalar, _y*scalar};
+}
+
 void Coordinate::normalizeComponents() noexcept {
     if (_x != 0) _x = _x / abs(_x);
     if (_y != 0) _y = _y / abs(_y);

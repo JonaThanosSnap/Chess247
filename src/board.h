@@ -3,6 +3,7 @@
 #include <memory>
 #include <stdexcept>
 #include <vector>
+#include <iostream>
 #include "piece.h"
 #include "team.h"
 #include "coordinate.h"
@@ -40,6 +41,10 @@ class Board {
         Piece getSquare(Coordinate p) const;
         bool isSquareThreatened(Team threatenedTeam, Coordinate p) const noexcept;
         bool isValidMove(Coordinate s, Coordinate d) const;
+        bool isInCheck(Team threatenedTeam) const noexcept;
+        bool pawnOnLastRow();
+        bool correctNumberOfKings();
+        bool isCheckMate(Team threatenedTeam);
         bool isCheckingMove(Coordinate s, Coordinate d) const;
         std::vector<Coordinate> getValidMoves(Coordinate p) const;
 };

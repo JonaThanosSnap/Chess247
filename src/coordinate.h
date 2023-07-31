@@ -21,6 +21,7 @@ class Coordinate {
         bool operator==(const Coordinate& other) const noexcept;
         Coordinate operator+(const Coordinate& other) const noexcept;
         Coordinate operator-(const Coordinate& other) const noexcept;
+        Coordinate operator*(int scalar) const noexcept;
         void normalizeComponents() noexcept;
 };
 
