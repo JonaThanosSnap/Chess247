@@ -7,6 +7,7 @@ class Chess;
 class InputManager {
 private:
     Chess* game;
+    void enterSetupMode();
 public:
     InputManager(Chess*);
     void handleInput();

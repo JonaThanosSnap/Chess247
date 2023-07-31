@@ -11,3 +11,7 @@ const char* GameNotStartedException::what() const throw() {
 const char* NotInSetupModeException::what() const throw() {
     return "Not in setup mode";
 }
+
+const char* InvalidPromotionException::what() const throw() {
+    return "Invalid promotion.";
+}

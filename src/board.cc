@@ -64,10 +64,6 @@ void Board::makeMove(Coordinate s, Coordinate d) {
         rookPiece.setHasMoved(true);
     }
 
-    // TODO Handle pawn promotion
-
-    // Kill piece if en passant has occurred
-
     // Pawn logic
     if (piece.getType() == Piece::Type::Pawn) {
         Coordinate pawnDelta = d - s;
@@ -83,6 +79,31 @@ void Board::makeMove(Coordinate s, Coordinate d) {
                 }
             }
             enPassantVictim = EMPTY_COORDS;
+        }
+
+        if((piece.getTeam() == Team::White && d.y() == 7) || (piece.getTeam() == Team::Black && d.y() == 0)){
+            char promotion;
+
+            std::cin >> promotion;
+
+            switch(promotion) {
+
+                case('q'):
+                    setSquare(d, Piece::Queen(piece.getTeam()));
+                    break;
+                case('r'):
+                    setSquare(d, Piece::Rook(piece.getTeam()));
+                    break;
+                case('b'):
+                    setSquare(d, Piece::Bishop(piece.getTeam()));
+                    break;
+                case('n'):
+                    setSquare(d, Piece::Knight(piece.getTeam()));
+                    break;
+                default:
+                    throw InvalidPromotionException();
+                    break;
+            }
         }
     }
 
@@ -473,3 +494,56 @@ bool Board::isInCheck(Team threatenedTeam) const noexcept {
     Coordinate kingCoords = getKingCoords(threatenedTeam);
     return isSquareThreatened(threatenedTeam, kingCoords);
 }
+
+bool Board::pawnOnLastRow() {
+    for(int i = 0; i < BOARD_WIDTH; i++) {
+        if(grid[0][i] == Piece::Pawn(Team::Black) || grid[7][i] == Piece::Pawn(Team::White)){
+            return true;
+        }
+    }
+    return false;
+}
+bool Board::correctNumberOfKings() {
+    int whiteKingCount = 0;
+    int blackKingCount = 0;
+    for(int i = 0; i < BOARD_WIDTH; i++) {
+        for(int j = 0; j < BOARD_WIDTH; j++) {
+            if(grid[i][j] == Piece::King(Team::White)){
+                whiteKingCount++;
+            }
+            if(grid[i][j] == Piece::King(Team::Black)){
+                blackKingCount++;
+            }
+        }
+    }
+    return whiteKingCount == 1 && blackKingCount == 1;
+}
+
+bool Board::isCheckMate(Team threatenedTeam) {
+
+    if(!isInCheck(threatenedTeam)) {
+        return false;
+    }
+    for(int i = 0; i < BOARD_WIDTH; i++) {
+        for(int j = 0; j < BOARD_WIDTH; j++) {
+            // if any piece has a valid move, we are not in checkmate
+            if(grid[i][j].getTeam() == threatenedTeam){
+                std::vector<Coordinate> validMoves = getValidMoves(Coordinate{j,i});
+                for(int k = 0; k < validMoves.size(); k++) {
+                    if(isValidMove(Coordinate{j,i}, validMoves[k])) {
+                        return false;
+                    }
+                }
+            }
+        }
+    }
+    return true;
+}
+
+// e2 e4
+// e7 e5
+// f1 c4
+// b8 c6
+// d1 h5
+// g8 f6
+// h5 f7
