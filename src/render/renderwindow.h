@@ -29,6 +29,15 @@ struct BoardTheme {
     Color textColor;
 };
 
+struct PieceSet {
+    std::string pawn;
+    std::string rook;
+    std::string bishop;
+    std::string knight;
+    std::string queen;
+    std::string king;
+};
+
 class RenderWindow : public ChessRender {
     Xwindow window{WINDOW_W, WINDOW_W};
 
@@ -39,7 +48,12 @@ class RenderWindow : public ChessRender {
         Color::ChessDotComWhite
     };
 
-    void addPieceSet(std::string folder_path);
+    PieceSet currentPieceSetWhite;
+    PieceSet currentPieceSetBlack;
+
+    void addPieceSet(const std::string& folder_path);
+    void setPieceSet(const std::string& folder_path);
+    std::string getPieceImage(Piece piece) const;
 
     public:
         RenderWindow(Board* board);

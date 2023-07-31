@@ -12,22 +12,22 @@ Board::Board() {
 
     // White back-rank pieces
     grid[0][0] = Piece::Rook(Team::White);
-    grid[0][1] = Piece::Bishop(Team::White);
-    grid[0][2] = Piece::Knight(Team::White);
+    grid[0][1] = Piece::Knight(Team::White);
+    grid[0][2] = Piece::Bishop(Team::White);
     grid[0][3] = Piece::Queen(Team::White);
     grid[0][4] = Piece::King(Team::White);
-    grid[0][5] = Piece::Knight(Team::White);
-    grid[0][6] = Piece::Bishop(Team::White);
+    grid[0][5] = Piece::Bishop(Team::White);
+    grid[0][6] = Piece::Knight(Team::White);
     grid[0][7] = Piece::Rook(Team::White);
 
     // Black back-rank pieces
     grid[7][0] = Piece::Rook(Team::Black);
-    grid[7][1] = Piece::Bishop(Team::Black);
-    grid[7][2] = Piece::Knight(Team::Black);
+    grid[7][1] = Piece::Knight(Team::Black);
+    grid[7][2] = Piece::Bishop(Team::Black);
     grid[7][3] = Piece::Queen(Team::Black);
     grid[7][4] = Piece::King(Team::Black);
-    grid[7][5] = Piece::Knight(Team::Black);
-    grid[7][6] = Piece::Bishop(Team::Black);
+    grid[7][5] = Piece::Bishop(Team::Black);
+    grid[7][6] = Piece::Knight(Team::Black);
     grid[7][7] = Piece::Rook(Team::Black);
 
     // history.push_back(*this);
