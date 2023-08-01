@@ -1,6 +1,12 @@
 #include "chess.h"
 #include "exception.h"
 
+/////////////////////////////////////
+//                                 //
+//       Chess Implementation      //
+//                                 //
+/////////////////////////////////////
+
 void Chess::startGame() noexcept {
     isGameStarted = true;
 }

@@ -8,15 +8,25 @@
 #include "exception.h"
 #include "inputmanager.h"
 
+/////////////////////////////////////
+//                                 //
+//         ChessApp Header         //
+//                                 //
+/////////////////////////////////////
+
 class ChessApp {
 
+    // private data members
     Chess chess;
     RenderOStream render;
     RenderWindow renderWindow;
     InputManager inputManager;
 
     public:
+        // constructor
         ChessApp();
+
+        // main game loop
         void playGame();
 
 };

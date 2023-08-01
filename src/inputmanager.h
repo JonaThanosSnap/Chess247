@@ -23,7 +23,9 @@ private:
     bool justSetup = false;
     void enterSetupMode();
 public:
+    // constructors
     InputManager(Chess*, ChessRender*, RenderWindow*);
+    // handle input
     int handleInput();
 };
 

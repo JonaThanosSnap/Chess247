@@ -22,8 +22,9 @@ int InputManager::handleInput() {
     std::string cmd;
     std::cin >> cmd;
 
+    // start a new game
     if (cmd == "game") {
-        // start a new game
+
         // if we just finished setup, start the game but don't reset the board
         if (game->isJustSetup()) {
             game->finishedSetup();
@@ -33,8 +34,8 @@ int InputManager::handleInput() {
         
         std::string white, black;
         std::cin >> white >> black;
-        // take in both inputs at once and ensure they are both wellformed
 
+        // take in both inputs at once and ensure they are both wellformed
         if (white == "human") {
             game->setPlayer(Team::White, new HumanPlayer{});
         } else if (white == "computer1") {
@@ -67,7 +68,6 @@ int InputManager::handleInput() {
 
         // start game if inputs are wellformed
         game->startGame();
-
     } else if (cmd == "changeboard") {
         windowRender->cycleTheme();
         windowRender->render();
@@ -84,7 +84,7 @@ int InputManager::handleInput() {
             std::cout << "Cannot resign, game has not been started." << std::endl;
             return 0;
         }
-
+        // resign the current player
         Team loser = game->resign();
         std::cout << (loser == Team::White ? "White" : "Black") << " wins!" << std::endl;
         
@@ -123,13 +123,13 @@ int InputManager::handleInput() {
                 game->makeMove(s, e, promotion);
             } catch (std::exception& e) {
                 std::cout << "Your move could not be made. Try again." << std::endl;
-                // std::cout << e.what() << std::endl;
             }
         } else {
             std::pair<Coordinate, Coordinate> move = currentPlayer->getMove();
             game->makeMove(move.first, move.second, 'q');
         }
 
+        // if there is a winner
         std::string winner = game->winner();
         if(winner != "") {
             if (winner == "Stalemate") {
@@ -137,21 +137,22 @@ int InputManager::handleInput() {
             } else {
                 std::cout << "Checkmate! " << game->winner() << " wins!" << std::endl;
             }
+            // render the board one last time
             render->render();
             windowRender->render();
             game->endGame();
             return 0;
         }
 
+        // if there is a check
         std::string teamInCheck = game->teamInCheck();
         if (teamInCheck != "") {
             std::cout << teamInCheck << " is in check." << std::endl;
         }
 
-        // TODO: Coordinate constructor needs to fail
-
+    // enter setup mode
     } else if (cmd == "setup") {
-        // enter setup mode
+        // only enter setup mode if the game has not started
         if(!game->getIsGameStarted()){
             enterSetupMode();
         }
@@ -159,6 +160,7 @@ int InputManager::handleInput() {
             std::cout << "Cannot enter setup mode while game is in progress." << std::endl;
         }
     } else {
+        // if we reach the eof, i.e. ctrl D, then exit the program
         if (std::cin.eof()) {
             return 1;
         } 
@@ -167,6 +169,8 @@ int InputManager::handleInput() {
     return 0;
 }
 
+// method for setup mode
+
 void InputManager::enterSetupMode(){
 
     game->setupEnter();
@@ -174,12 +178,14 @@ void InputManager::enterSetupMode(){
     std::string cmd;
 
     while(std::cin >> cmd) {
+        // insert a piece at some coordinate
         if (cmd == "+") {
             char p;
             std::string coord;
 
             std::cin >> p >> coord;
 
+            // determine the team (lower case is black, upper case is white)
             Team team = p >= 'a' ? Team::Black : Team::White;
 
             Coordinate location = Coordinate{coord};
@@ -211,10 +217,12 @@ void InputManager::enterSetupMode(){
             newPiece.setHasMoved(true);
             game->setupPlacePiece(location, newPiece);
 
+            // rerender the board
             render->render();
             windowRender->render();
 
         }
+        // remove a piece at some coordinate
         else if(cmd == "-"){
             std::string coord;
 
@@ -228,6 +236,7 @@ void InputManager::enterSetupMode(){
             windowRender->render();
         }
 
+        // set the current team
         else if(cmd == "="){
             std::string colour;
 
@@ -245,19 +254,23 @@ void InputManager::enterSetupMode(){
             }
         }
 
+        // exit setup mode
         else if(cmd == "done"){
             Board* board = game->getBoard();
 
+            // cannot exit setup mode if a king is in check
             if(board->isInCheck(Team::White) || board->isInCheck(Team::Black)) {
                 std::cout << "Cannot exit setup mode: a king is in check" << std::endl;
                 continue;
             }
 
+            // cannot exit setup mode if a pawn is on the last row
             if(board->pawnOnLastRow()) {
                 std::cout << "Cannot exit setup mode: a pawn is on the last row" << std::endl;
                 continue;
             }
 
+            // cannot exit setup mode if there are not enough kings
             if(!board->correctNumberOfKings()){
                 std::cout << "Cannot exit setup mode: each player must have one king" << std::endl;
                 continue;
