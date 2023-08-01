@@ -12,7 +12,7 @@ void Chess::endGame() noexcept {
 void Chess::makeMove(Coordinate s, Coordinate d, char promotion) {
     if (!board.isValidMove(s, d)) throw InvalidMoveException{};
     if (!isGameStarted) throw GameNotStartedException{};
-    //std::cout << "(" << s.x() << ", " << s.y() << ")" << std::endl;
+
     Piece piece = board.getSquare(s);
     if (piece.getTeam() != currentTeam) throw InvalidMoveException{};
 
@@ -59,7 +59,6 @@ Player* Chess::getPlayer(Team team) noexcept {
     }
 }
 
-
 Player* Chess::getCurrentPlayer() noexcept {
     return getPlayer(currentTeam);
 }
@@ -77,7 +76,12 @@ bool Chess::getIsSetupMode() const noexcept {
 }
 
 std::string Chess::winner() {
-    if(board.isCheckMate(currentTeam)){
+    if (board.isStaleMate(currentTeam)) {
+        scores[0]++;
+        scores[1]++;
+        return "Stalemate";
+    }
+    if (board.isCheckMate(currentTeam)) {
         Team loser = currentTeam;
         scores[loser == Team::White ? 1 : 0] += 1;
         return (loser == Team::White) ? "Black" : "White";
@@ -85,6 +89,11 @@ std::string Chess::winner() {
     return "";
 }
 
+std::string Chess::teamInCheck() {
+    if (board.isInCheck(Team::White)) return "White";
+    if (board.isInCheck(Team::Black)) return "White";
+    return "";
+}
 
 Team Chess::resign() {
     Team loser = currentTeam;

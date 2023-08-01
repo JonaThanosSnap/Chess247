@@ -122,10 +122,20 @@ int InputManager::handleInput() {
             game->makeMove(move.first, move.second, 'q');
         }
 
-        if(game->winner() != "") {
-            std::cout << "Checkmate! " << game->winner() << " wins!" << std::endl;
+        std::string winner = game->winner();
+        if(winner != "") {
+            if (winner == "Stalemate") {
+                std::cout << "Stalemate!" << std::endl;
+            } else {
+                std::cout << "Checkmate! " << game->winner() << " wins!" << std::endl;
+            }
             game->endGame();
             return 0;
+        }
+
+        std::string teamInCheck = game->teamInCheck();
+        if (teamInCheck != "") {
+            std::cout << teamInCheck << " is in check." << std::endl;
         }
 
         // TODO: Coordinate constructor needs to fail

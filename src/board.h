@@ -43,6 +43,7 @@ class Board {
         bool isInCheck(Team threatenedTeam) const noexcept;
         bool pawnOnLastRow();
         bool correctNumberOfKings();
+        bool isStaleMate(Team movingTeam);
         bool isCheckMate(Team threatenedTeam);
         bool isCheckingMove(Coordinate s, Coordinate d) const;
         std::vector<Coordinate> getValidMoves(Coordinate p) const;

@@ -35,7 +35,6 @@ Board::Board() {
 
 void Board::makeMove(Coordinate s, Coordinate d, char promotion) {
     // Precondition: isValidMove(s, d) is true
-    //std::cout << "(" << s.x() << ", " << s.y() << ")" << std::endl;
     Piece piece = getSquare(s);
     piece.setHasMoved(true);
 
@@ -543,8 +542,28 @@ bool Board::correctNumberOfKings() {
     return whiteKingCount == 1 && blackKingCount == 1;
 }
 
-bool Board::isCheckMate(Team threatenedTeam) {
+bool Board::isStaleMate(Team movingTeam) {
+    if (isInCheck(movingTeam)) {
+        return false;
+    }
 
+    for (int i = 0; i < BOARD_WIDTH; i++) {
+        for (int j = 0; j < BOARD_WIDTH; j++) {
+            // if any piece has a valid move, we are not in stalemate
+            if (grid[i][j].getTeam() == movingTeam){
+                std::vector<Coordinate> validMoves = getValidMoves(Coordinate{j,i});
+                for (int k = 0; k < validMoves.size(); k++) {
+                    if (isValidMove(Coordinate{j,i}, validMoves[k])) {
+                        return false;
+                    }
+                }
+            }
+        }
+    }
+    return true;
+}
+
+bool Board::isCheckMate(Team threatenedTeam) {
     if(!isInCheck(threatenedTeam)) {
         return false;
     }
