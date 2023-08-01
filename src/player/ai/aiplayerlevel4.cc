@@ -80,14 +80,16 @@ std::pair<Coordinate, Coordinate> AIPlayerLevel4::getMove() {
                     for (int i=0; i < pieceValue; i++) {
                         preferredMoves.push_back(std::make_pair(currSquare, v));
                     }
-                } else if (board->isCheckingMove(currSquare, v)) {
+                } 
+                if (board->isCheckingMove(currSquare, v)) {
                     // check. weight this move by 12. if square is protected, reduce weight to 1
                     int weight = board->isSquareThreatened(team, v) ? 1 : 12;
 
                     for (int i=0; i < weight; i++) {
                         preferredMoves.push_back(std::make_pair(currSquare, v));
                     }
-                } else if (board->isSquareThreatened(team, currSquare) 
+                }
+                if (board->isSquareThreatened(team, currSquare) 
                             && !board->isSquareThreatened(team, v)) {
                     // escape capture. weight this move by the value of the escaping piece
                     for (int i=0; i < getPieceValue(board->getSquare(currSquare).getType()); i++) {
