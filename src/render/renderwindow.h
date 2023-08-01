@@ -7,6 +7,8 @@
 #include "window.h"
 #include "chessrender.h"
 
+#include <vector>
+
 const unsigned int WINDOW_W = 600;
 const unsigned int BOARD_W = 512;
 const unsigned int SQUARE_W = BOARD_W/BOARD_WIDTH;
@@ -25,6 +27,7 @@ enum Color {
 };
 
 struct BoardTheme {
+    std::string name;
     Color blackSquareColor;
     Color whiteSquareColor;
     Color blackSquareHighlightColor;
@@ -33,7 +36,7 @@ struct BoardTheme {
     Color textColor;
 };
 
-struct PieceSet {
+struct TeamPieceSet {
     std::string pawn;
     std::string rook;
     std::string bishop;
@@ -42,28 +45,36 @@ struct PieceSet {
     std::string king;
 };
 
+struct PieceSet {
+    std::string name;
+    TeamPieceSet white;
+    TeamPieceSet black;
+};
+
 class RenderWindow : public ChessRender {
     Xwindow window{WINDOW_W, WINDOW_W};
 
-    BoardTheme currentTheme = BoardTheme{
-        Color::ChessDotComBlack,
-        Color::ChessDotComWhite,
-        Color::ChessDotComBlackHighlight,
-        Color::ChessDotComWhiteHighlight,
-        Color::ChessDotComBg,
-        Color::ChessDotComWhite
-    };
+    std::vector<BoardTheme> boardThemes;
+    std::vector<PieceSet> pieceSets;
 
-    PieceSet currentPieceSetWhite;
-    PieceSet currentPieceSetBlack;
+    unsigned int currentBoardTheme = 0;
+    unsigned int currentPieceSet = 0;
+
+    void addTheme(const BoardTheme& theme);
+    void setTheme(const std::string& name);
 
     void addPieceSet(const std::string& folder_path);
     void setPieceSet(const std::string& folder_path);
+
     std::string getPieceImage(Piece piece) const;
 
     public:
         RenderWindow(Board* board);
         void render() override;
+        void cycleTheme();
+        void cyclePieceSet();
+        void setRandomTheme();
+        void setRandomPieceSet();
 };
 
 #endif

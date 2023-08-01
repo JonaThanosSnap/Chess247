@@ -9,7 +9,7 @@
 #include <string>
 #include <iostream>
 
-InputManager::InputManager(Chess* chess, ChessRender* chessRender, ChessRender* backupRenderer): game{chess}, render{chessRender}, backupRenderer{backupRenderer} {};
+InputManager::InputManager(Chess* chess, ChessRender* chessRender, RenderWindow* windowRender): game{chess}, render{chessRender}, windowRender{windowRender} {};
 
 int InputManager::handleInput() {
     // read in one command at a time and handle it
@@ -62,6 +62,16 @@ int InputManager::handleInput() {
         // start game if inputs are wellformed
         game->startGame();
 
+    } else if (cmd == "changeboard") {
+        windowRender->cycleTheme();
+        windowRender->render();
+    } else if (cmd == "changepieces") {
+        windowRender->cyclePieceSet();
+        windowRender->render();
+    } else if (cmd == "random") {
+        windowRender->setRandomTheme();
+        windowRender->setRandomPieceSet();
+        windowRender->render();
     } else if (cmd == "resign") {
         // make sure the game has started
         if (!game->getIsGameStarted()) {
@@ -122,7 +132,7 @@ int InputManager::handleInput() {
                 std::cout << "Checkmate! " << game->winner() << " wins!" << std::endl;
             }
             render->render();
-            backupRenderer->render();
+            windowRender->render();
             game->endGame();
             return 0;
         }
@@ -196,7 +206,7 @@ void InputManager::enterSetupMode(){
             game->setupPlacePiece(location, newPiece);
 
             render->render();
-            backupRenderer->render();
+            windowRender->render();
 
         }
         else if(cmd == "-"){
@@ -209,7 +219,7 @@ void InputManager::enterSetupMode(){
             game->setupRemovePiece(location);
 
             render->render();
-            backupRenderer->render();
+            windowRender->render();
         }
 
         else if(cmd == "="){
