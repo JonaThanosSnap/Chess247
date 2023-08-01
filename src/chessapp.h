@@ -12,7 +12,7 @@ class ChessApp {
 
     Chess chess;
     RenderOStream render;
-    //RenderWindow renderWindow;
+    RenderWindow renderWindow;
     InputManager inputManager;
 
     public:

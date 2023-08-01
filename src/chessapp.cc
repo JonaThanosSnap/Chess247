@@ -1,7 +1,7 @@
 #include "chessapp.h"
 
-// ChessApp::ChessApp(): chess{}, render{chess.getBoard(), std::cout}, renderWindow{chess.getBoard()}, inputManager{&chess, &render} {};
-ChessApp::ChessApp(): chess{}, render{chess.getBoard(), std::cout}, inputManager{&chess, &render} {};
+ChessApp::ChessApp(): chess{}, render{chess.getBoard(), std::cout}, renderWindow{chess.getBoard()}, inputManager{&chess, &render} {};
+//ChessApp::ChessApp(): chess{}, render{chess.getBoard(), std::cout}, inputManager{&chess, &render} {};
 void ChessApp::playGame(){
     for(;;) { 
         // ask input manager to take input
@@ -14,7 +14,7 @@ void ChessApp::playGame(){
         }
         if (chess.getIsGameStarted() || chess.getIsSetupMode()) {
             render.render();
-            //renderWindow.render();
+            renderWindow.render();
         }
     }
 }
