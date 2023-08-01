@@ -58,13 +58,22 @@ std::pair<Coordinate, Coordinate> AIPlayerLevel4::getMove() {
                 // if this move escapes capture, captures, or checks, prefer it
 
                 if (board->getSquare(v).getType() != Piece::Type::None && board->getSquare(v).getTeam() != team) {
-                    // captures. weight this move according to piece value
-                    for (int i=0; i < getPieceValue(board->getSquare(v).getType()); i++) {
+                    // captures. weight this move according to piece trade value
+                    int pieceValue = getPieceValue(board->getSquare(v).getType());
+
+                    if (board->isSquareThreatened(team, v)) {
+                        // if the target position is protected, subtract current piece value-1.
+                        pieceValue-getPieceValue(board->getSquare(currSquare).getType())+1;
+                    }
+
+                    for (int i=0; i < pieceValue; i++) {
                         preferredMoves.push_back(std::make_pair(currSquare, v));
                     }
                 } else if (board->isCheckingMove(currSquare, v)) {
-                    // check. weight this move by 12
-                    for (int i=0; i < 12; i++) {
+                    // check. weight this move by 12. if square is protected, reduce weight to 1
+                    int weight = board->isSquareThreatened(team, v) ? 1 : 12;
+
+                    for (int i=0; i < weight; i++) {
                         preferredMoves.push_back(std::make_pair(currSquare, v));
                     }
                 } else if (board->isSquareThreatened(team, currSquare) 
