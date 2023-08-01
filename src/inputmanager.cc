@@ -18,12 +18,6 @@ int InputManager::handleInput() {
 
     if (cmd == "game") {
         // start a new game
-
-        // make sure the game has started
-        if (game->getIsGameStarted()) {
-            std::cout << "Cannot create a new game, there is a game in progress." << std::endl;
-            return 0;
-        }
         // if we just finished setup, start the game but don't reset the board
         if (game->isJustSetup()) {
             game->finishedSetup();
