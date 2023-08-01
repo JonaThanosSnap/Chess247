@@ -557,7 +557,7 @@ bool Board::isInCheck(Team threatenedTeam) const noexcept {
 // check if a pawn is on the last row
 bool Board::pawnOnLastRow() {
     for(int i = 0; i < BOARD_WIDTH; i++) {
-        if(grid[0][i] == Piece::Pawn(Team::Black) || grid[7][i] == Piece::Pawn(Team::White)){
+        if(grid[0][i] == Piece::Pawn(Team::Black) || grid[7][i] == Piece::Pawn(Team::White) || grid[0][i] == Piece::Pawn(Team::White) || grid[7][i] == Piece::Pawn(Team::Black)){
             return true;
         }
     }
