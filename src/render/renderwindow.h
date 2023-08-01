@@ -19,12 +19,16 @@ enum Color {
     Black,
     ChessDotComWhite,
     ChessDotComBlack,
+    ChessDotComBlackHighlight,
+    ChessDotComWhiteHighlight,
     ChessDotComBg
 };
 
 struct BoardTheme {
     Color blackSquareColor;
     Color whiteSquareColor;
+    Color blackSquareHighlightColor;
+    Color whiteSquareHighlightColor;
     Color bgColor;
     Color textColor;
 };
@@ -44,6 +48,8 @@ class RenderWindow : public ChessRender {
     BoardTheme currentTheme = BoardTheme{
         Color::ChessDotComBlack,
         Color::ChessDotComWhite,
+        Color::ChessDotComBlackHighlight,
+        Color::ChessDotComWhiteHighlight,
         Color::ChessDotComBg,
         Color::ChessDotComWhite
     };

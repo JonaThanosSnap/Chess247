@@ -51,6 +51,8 @@
         "cwctype": "cpp",
         "map": "cpp",
         "iostream": "cpp",
-        "cstring": "cpp"
+        "cstring": "cpp",
+        "set": "cpp",
+        "unordered_set": "cpp"
     }
 }

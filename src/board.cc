@@ -110,6 +110,9 @@ void Board::makeMove(Coordinate s, Coordinate d, char promotion) {
         // no pawns double moved this turn
         enPassantVictim = EMPTY_COORDS;
     }
+
+    lastMoveStart = s;
+    lastMoveEnd = d;
 }
 
 void Board::setSquare(Coordinate p, Piece piece) {
@@ -590,3 +593,7 @@ bool Board::isCheckMate(Team threatenedTeam) {
 // d1 h5
 // g8 f6
 // h5 f7
+
+std::pair<Coordinate, Coordinate> Board::getLastMove() const noexcept {
+    return {lastMoveStart, lastMoveEnd};
+}

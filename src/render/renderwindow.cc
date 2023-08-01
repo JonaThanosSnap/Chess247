@@ -6,6 +6,8 @@ RenderWindow::RenderWindow(Board* board): ChessRender{board} {
     window.addColor(Color::White, "ff", "ff", "ff");
     window.addColor(Color::ChessDotComBlack, "76", "96", "56");
     window.addColor(Color::ChessDotComWhite, "ee", "ee", "d2");
+    window.addColor(Color::ChessDotComBlackHighlight, "f0", "80", "3c");
+    window.addColor(Color::ChessDotComWhiteHighlight, "ff", "93", "4f");
     window.addColor(Color::ChessDotComBg, "36", "46", "52");
 
     // Set up images
@@ -104,7 +106,15 @@ void RenderWindow::render() {
             Coordinate renderc{j, 7-i};
             Piece piece = board->getSquare(c);
             
-            unsigned long squareColor = isWhite(c) ? currentTheme.whiteSquareColor : currentTheme.blackSquareColor;
+            unsigned long squareColor;
+            Coordinate lastMoveStart{EMPTY_COORDS}, lastMoveEnd{EMPTY_COORDS};
+            std::tie(lastMoveStart, lastMoveEnd) = board->getLastMove();
+            if (c == lastMoveStart || c == lastMoveEnd) {
+                squareColor = isWhite(c) ? currentTheme.whiteSquareHighlightColor : currentTheme.blackSquareHighlightColor;
+            } else {
+                squareColor = isWhite(c) ? currentTheme.whiteSquareColor : currentTheme.blackSquareColor;
+            }
+
             Coordinate squareTopLeft = BOARD_TOP_LEFT + renderc*SQUARE_W;
             window.fillRectangle(squareTopLeft.x(), squareTopLeft.y(), SQUARE_W, SQUARE_W, squareColor);
 

@@ -14,6 +14,8 @@ const Coordinate EMPTY_COORDS = Coordinate{-1, -1};
 class Board {
     Piece grid[BOARD_WIDTH][BOARD_WIDTH];
     Coordinate enPassantVictim = EMPTY_COORDS;
+    Coordinate lastMoveStart = EMPTY_COORDS;
+    Coordinate lastMoveEnd = EMPTY_COORDS;
 
     // TODO stack of each move taken so far
 
@@ -47,6 +49,7 @@ class Board {
         bool isCheckMate(Team threatenedTeam);
         bool isCheckingMove(Coordinate s, Coordinate d) const;
         std::vector<Coordinate> getValidMoves(Coordinate p) const;
+        std::pair<Coordinate, Coordinate> getLastMove() const noexcept;
 };
 
 #endif
