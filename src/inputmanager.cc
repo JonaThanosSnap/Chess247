@@ -24,8 +24,12 @@ int InputManager::handleInput() {
             std::cout << "Cannot create a new game, there is a game in progress." << std::endl;
             return 0;
         }
-
-        game->boardReset();
+        // if we just finished setup, start the game but don't reset the board
+        if (game->isJustSetup()) {
+            game->finishedSetup();
+        } else {
+            game->boardReset();
+        }
         
         std::string white, black;
         std::cin >> white >> black;
@@ -96,19 +100,26 @@ int InputManager::handleInput() {
             std::string start, dest;
 
             std::cin >> start >> dest;
+
+            char promotion;
+
+            if (std::cin.peek() != '\n') {
+                std::cin >> promotion;
+            }
+
             try {
                 // if coordinates are malformed, we need to catch this
                 Coordinate s{start};
                 Coordinate e{dest};
 
-                game->makeMove(s, e);
+                game->makeMove(s, e, promotion);
             } catch (std::exception& e) {
                 std::cout << "Your move could not be made. Try again." << std::endl;
                 // std::cout << e.what() << std::endl;
             }
         } else {
             std::pair<Coordinate, Coordinate> move = currentPlayer->getMove();
-            game->makeMove(move.first, move.second);
+            game->makeMove(move.first, move.second, 'q');
         }
 
         if(game->winner() != "") {
@@ -120,6 +131,7 @@ int InputManager::handleInput() {
         // TODO: Coordinate constructor needs to fail
 
     } else if (cmd == "setup") {
+        // enter setup mode
         if(!game->getIsGameStarted()){
             enterSetupMode();
         }
@@ -176,9 +188,11 @@ void InputManager::enterSetupMode(){
                 std::cout << "Invalid piece type" << std::endl;
                 continue;
             }
+            newPiece.setHasMoved(true);
             game->setupPlacePiece(location, newPiece);
 
             render->render();
+
         }
         else if(cmd == "-"){
             std::string coord;

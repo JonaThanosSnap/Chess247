@@ -33,7 +33,7 @@ class Board {
 
     public:
         Board();
-        void makeMove(Coordinate s, Coordinate d);
+        void makeMove(Coordinate s, Coordinate d, char promotion = '\0');
         void setSquare(Coordinate p, Piece piece);
         void clearSquare(Coordinate p);
         void promote(Coordinate p);
