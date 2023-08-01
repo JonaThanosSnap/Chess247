@@ -9,6 +9,12 @@
 #include <string>
 #include <iostream>
 
+//////////////////////////////////
+//                              //
+// Input Manager Implementation //
+//                              //
+//////////////////////////////////
+
 InputManager::InputManager(Chess* chess, ChessRender* chessRender, RenderWindow* windowRender): game{chess}, render{chessRender}, windowRender{windowRender} {};
 
 int InputManager::handleInput() {

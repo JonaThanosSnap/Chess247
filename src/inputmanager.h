@@ -4,11 +4,19 @@
 #include "render/chessrender.h"
 #include "render/renderwindow.h"
 
+//////////////////////////////////
+//                              //
+//     Input Manager Header     //
+//                              //
+//////////////////////////////////
+
+// forward declaration of Chess class
 class Chess;
 
 // translates inputs into commands for chess game
 class InputManager {
 private:
+    // private data members
     Chess* game;
     ChessRender* render;
     RenderWindow* windowRender;
