@@ -33,6 +33,7 @@ class Chess {
         Player* getCurrentPlayer() noexcept;
         Board* getBoard() noexcept;
         bool getIsGameStarted() const noexcept;
+        bool getIsSetupMode() const noexcept;
         std::string winner();
         Team resign();
         void boardReset();

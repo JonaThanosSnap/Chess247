@@ -41,7 +41,9 @@ int main() {
             chess.finalScores();
             break;
         }
-        render.render();
+        if (chess.getIsGameStarted() || chess.getIsSetupMode()) {
+            render.render();
+        }
     }
 
     return 0;
