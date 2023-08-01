@@ -157,35 +157,34 @@ void InputManager::enterSetupMode(){
         if (cmd == "+") {
             char p;
             std::string coord;
-
             std::cin >> p >> coord;
 
             Team team = p >= 'a' ? Team::Black : Team::White;
 
-            Coordinate location = Coordinate{coord};
+            Coordinate location{"a1"};
+            // ensure the coordinate is valid
+            try {
+                location = Coordinate{coord};
+            } catch (...) {
+                std::cout << "Coordinate is not valid." << std::endl;
+                continue;
+            }
 
             Piece newPiece;
-
-            if(p == 'k' || p == 'K'){
+            if (p == 'k' || p == 'K') {
                 newPiece = Piece::King(team);
-            }
-            else if(p == 'b' || p == 'B'){
+            } else if (p == 'b' || p == 'B') {
                 newPiece = Piece::Bishop(team);
-            }
-            else if(p == 'p' || p == 'P'){
+            } else if (p == 'p' || p == 'P') {
                 newPiece = Piece::Pawn(team);
-            }
-            else if(p == 'r' || p == 'R'){
+            } else if (p == 'r' || p == 'R') {
                 newPiece = Piece::Rook(team);
-            }
-            else if(p == 'n' || p == 'N'){
+            } else if (p == 'n' || p == 'N') {
                 newPiece = Piece::Knight(team);
-            }
-            else if(p == 'q' || p == 'Q'){
+            } else if (p == 'q' || p == 'Q') {
                 newPiece = Piece::Queen(team);
-            }
-            else{
-                std::cout << "Invalid piece type" << std::endl;
+            } else {
+                std::cout << "Invalid piece type." << std::endl;
                 continue;
             }
             newPiece.setHasMoved(true);
@@ -196,10 +195,16 @@ void InputManager::enterSetupMode(){
         }
         else if(cmd == "-"){
             std::string coord;
-
             std::cin >> coord;
 
-            Coordinate location = Coordinate{coord};
+            Coordinate location{"a1"};
+            // ensure the coordinate is valid
+            try {
+                location = Coordinate{coord};
+            } catch (...) {
+                std::cout << "Coordinate is not valid." << std::endl;
+                continue;
+            }
 
             game->setupRemovePiece(location);
 
@@ -208,7 +213,6 @@ void InputManager::enterSetupMode(){
 
         else if(cmd == "="){
             std::string colour;
-
             std::cin >> colour;
 
             if(colour == "white"){
@@ -218,7 +222,7 @@ void InputManager::enterSetupMode(){
                 game->setupSetCurrentTeam(Team::Black);
             }
             else{
-                std::cout << "Invalid colour" << std::endl;
+                std::cout << "Invalid colour." << std::endl;
                 continue;
             }
         }
