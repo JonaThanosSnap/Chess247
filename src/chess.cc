@@ -7,14 +7,17 @@
 //                                 //
 /////////////////////////////////////
 
+// start the game
 void Chess::startGame() noexcept {
     isGameStarted = true;
 }
 
+// end the game
 void Chess::endGame() noexcept {
     isGameStarted = false;
 }
 
+// make a move
 void Chess::makeMove(Coordinate s, Coordinate d, char promotion) {
     if (!board.isValidMove(s, d)) throw InvalidMoveException{};
     if (!isGameStarted) throw GameNotStartedException{};
@@ -28,6 +31,7 @@ void Chess::makeMove(Coordinate s, Coordinate d, char promotion) {
 
 }
 
+// setup mode commands
 void Chess::setupEnter() noexcept {
     isSetupMode = true;
     justSetup = true;
@@ -56,6 +60,7 @@ void Chess::setPlayer(Team team, Player* player) noexcept {
     players[team] = std::unique_ptr<Player>(player);
 }
 
+// get private data members
 Player* Chess::getPlayer(Team team) noexcept {
     auto playerItr = players.find(team);
     if (playerItr == players.end()) {

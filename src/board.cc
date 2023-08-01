@@ -3,6 +3,13 @@
 
 #include <algorithm>
 
+/////////////////////////////////////
+//                                 //
+//       Board Implementation      //
+//                                 //
+/////////////////////////////////////
+
+// constructors
 Board::Board() {
     // Create pawns
     for (int i = 0; i < BOARD_WIDTH; i++) {
@@ -33,6 +40,7 @@ Board::Board() {
     // history.push_back(*this);
 }
 
+// board moves
 void Board::makeMove(Coordinate s, Coordinate d, char promotion) {
     // Precondition: isValidMove(s, d) is true
 
@@ -117,6 +125,7 @@ void Board::makeMove(Coordinate s, Coordinate d, char promotion) {
     lastMoveEnd = d;
 }
 
+// set a piece at coordinate p
 void Board::setSquare(Coordinate p, Piece piece) {
    // Construct new Piece and place it into a grid square
    if (!coordsInRange(p)) throw std::out_of_range("Board::setSquare: coords out of range");
@@ -190,7 +199,7 @@ bool Board::isValidMove(Coordinate s, Coordinate d) const {
     }
 }
 
-// TODO - integrate this into the above function
+// checks if a move puts the king in check
 bool Board::isCheckingMove(Coordinate s, Coordinate d) const {
     if (!coordsInRange(s)) throw std::out_of_range("Board::isValidMove: start position out of range");
     if (!coordsInRange(d)) throw std::out_of_range("Board::isValidMove: end position out of range");
@@ -209,8 +218,8 @@ bool Board::isCheckingMove(Coordinate s, Coordinate d) const {
     }
 }
 
-std::vector<Coordinate> Board::getValidMoves(Coordinate p) const {
-    // getValidMoves => first finds all 'possible' moves without considering check.         
+// get a list of valid moves
+std::vector<Coordinate> Board::getValidMoves(Coordinate p) const {       
 
     if (!coordsInRange(p)) throw std::out_of_range("Board::getValidMoves: position out of range");
 
@@ -246,6 +255,7 @@ std::vector<Coordinate> Board::getValidMoves(Coordinate p) const {
     return validMoves;
 }
 
+// gets the valid moves for a pawn
 std::vector<Coordinate> Board::getValidMovesPawn(Coordinate p) const {
     if (!coordsInRange(p)) throw std::out_of_range("Board::getValidMovePawn: position out of range");
     
@@ -299,6 +309,7 @@ std::vector<Coordinate> Board::getValidMovesPawn(Coordinate p) const {
     return validMoves;
 }
 
+// gets the valid moves for a knight
 std::vector<Coordinate> Board::getValidMovesRook(Coordinate p) const {
     if (!coordsInRange(p)) throw std::out_of_range("Board::getValidMovesRook: position out of range");
 
@@ -330,6 +341,7 @@ std::vector<Coordinate> Board::getValidMovesRook(Coordinate p) const {
     return validMoves;
 }
 
+// gets the valid moves for a knight
 std::vector<Coordinate> Board::getValidMovesKnight(Coordinate p) const {
     if (!coordsInRange(p)) throw std::out_of_range("Board::getValidMoveKnight: position out of range");
     Team team = getSquare(p).getTeam();
@@ -358,6 +370,7 @@ std::vector<Coordinate> Board::getValidMovesKnight(Coordinate p) const {
     return validMoves;
 }
 
+// gets the valid moves for a bishop
 std::vector<Coordinate> Board::getValidMovesBishop(Coordinate p) const {
     if (!coordsInRange(p)) throw std::out_of_range("Board::getValidMoveBishop: position out of range");
     Team team = getSquare(p).getTeam();
@@ -385,6 +398,7 @@ std::vector<Coordinate> Board::getValidMovesBishop(Coordinate p) const {
     return validMoves;
 }
 
+// gets the valid moves for a queen
 std::vector<Coordinate> Board::getValidMovesQueen(Coordinate p) const {
     if (!coordsInRange(p)) throw std::out_of_range("Board::getValidMoveQueen: position out of range");
     Team team = getSquare(p).getTeam();
@@ -412,6 +426,7 @@ std::vector<Coordinate> Board::getValidMovesQueen(Coordinate p) const {
     return validMoves;
 }
 
+// gets the valid moves for a king
 std::vector<Coordinate> Board::getValidMovesKing(Coordinate p) const {
     if (!coordsInRange(p)) throw std::out_of_range("Board::getValidMoveKing: position out of range");
     // do the same as rook and bishop but only one square
@@ -487,10 +502,12 @@ std::vector<Coordinate> Board::getValidMovesKing(Coordinate p) const {
     return validMoves;
 }
 
+// gets the enemy team
 Team Board::getEnemyTeam(Team team) const noexcept {
     return team == Team::White ? Team::Black : Team::White;
 }
 
+// gets the king's coordinates
 Coordinate Board::getKingCoords(Team team) const noexcept {
     for(int y = 0; y < BOARD_WIDTH; y++){
         for(int x = 0; x < BOARD_WIDTH; x++){
@@ -503,6 +520,7 @@ Coordinate Board::getKingCoords(Team team) const noexcept {
     return Coordinate{-1, -1};
 }
 
+// get a specific piece's coordinates
 std::vector<Coordinate> Board::getPieceCoords(Team team) const noexcept {
     std::vector<Coordinate> pieceCoords;
     for (int x = 0; x < BOARD_WIDTH; x++) {
@@ -517,6 +535,7 @@ std::vector<Coordinate> Board::getPieceCoords(Team team) const noexcept {
     return pieceCoords;
 }
 
+// checks if a square is threatened by the enemy team
 bool Board::isSquareThreatened(Team threatenedTeam, Coordinate p) const noexcept {
     std::vector<Coordinate> enemyMoves;
     std::vector<Coordinate> enemyPieceCoords = getPieceCoords(getEnemyTeam(threatenedTeam));
@@ -529,11 +548,13 @@ bool Board::isSquareThreatened(Team threatenedTeam, Coordinate p) const noexcept
     return false;
 }
 
+// checks if a team is in check
 bool Board::isInCheck(Team threatenedTeam) const noexcept {
     Coordinate kingCoords = getKingCoords(threatenedTeam);
     return isSquareThreatened(threatenedTeam, kingCoords);
 }
 
+// check if a pawn is on the last row
 bool Board::pawnOnLastRow() {
     for(int i = 0; i < BOARD_WIDTH; i++) {
         if(grid[0][i] == Piece::Pawn(Team::Black) || grid[7][i] == Piece::Pawn(Team::White)){
@@ -542,6 +563,8 @@ bool Board::pawnOnLastRow() {
     }
     return false;
 }
+
+// check if there is only one king per team
 bool Board::correctNumberOfKings() {
     int whiteKingCount = 0;
     int blackKingCount = 0;
@@ -558,6 +581,7 @@ bool Board::correctNumberOfKings() {
     return whiteKingCount == 1 && blackKingCount == 1;
 }
 
+// check for stalemate
 bool Board::isStaleMate(Team movingTeam) {
     if (isInCheck(movingTeam)) {
         return false;
@@ -579,6 +603,7 @@ bool Board::isStaleMate(Team movingTeam) {
     return true;
 }
 
+// check for checkmate
 bool Board::isCheckMate(Team threatenedTeam) {
     if(!isInCheck(threatenedTeam)) {
         return false;
@@ -599,14 +624,7 @@ bool Board::isCheckMate(Team threatenedTeam) {
     return true;
 }
 
-// e2 e4
-// e7 e5
-// f1 c4
-// b8 c6
-// d1 h5
-// g8 f6
-// h5 f7
-
+// get the last made move
 std::pair<Coordinate, Coordinate> Board::getLastMove() const noexcept {
     return {lastMoveStart, lastMoveEnd};
 }

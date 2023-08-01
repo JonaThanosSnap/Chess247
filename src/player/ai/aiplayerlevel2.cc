@@ -2,10 +2,18 @@
 #include "../../piece.h"
 #include <iostream>
 
+/////////////////////////////////////
+//                                 //
+// AI Player Level 2 Implementation//
+//                                 //
+/////////////////////////////////////
+
+// constructor
 AIPlayerLevel2::AIPlayerLevel2(Board* board, Team t): AIPlayer{board} {
     team = t;
 };
 
+// getMove returns a pair of coordinates representing the move
 std::pair<Coordinate, Coordinate> AIPlayerLevel2::getMove() {
     // return a random legal move preferring captures and checks
 

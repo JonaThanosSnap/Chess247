@@ -4,10 +4,18 @@
 #include <utility>
 #include <iostream>
 
+/////////////////////////////////////
+//                                 //
+// AI Player Level 1 Implementation//
+//                                 //
+/////////////////////////////////////
+
+// constructor
 AIPlayerLevel1::AIPlayerLevel1(Board* board, Team t): AIPlayer{board} {
     team = t;
 };
 
+// getMove returns a pair of coordinates representing the move
 std::pair<Coordinate, Coordinate> AIPlayerLevel1::getMove() {
     // return a random legal move
 

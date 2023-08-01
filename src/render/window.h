@@ -6,7 +6,14 @@
 #include <map>
 #include <memory>
 
+/////////////////////////////////////
+//                                 //
+//          Window Header          //
+//                                 //
+/////////////////////////////////////
+
 class Xwindow {
+    // private data members
     Display *d;
     Window w;
     Colormap cmap;

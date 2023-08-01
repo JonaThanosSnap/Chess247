@@ -8,17 +8,25 @@
 #include "team.h"
 #include "coordinate.h"
 
+/////////////////////////////////////
+//                                 //
+//           Board Header          //
+//                                 //
+/////////////////////////////////////
+
+// constant global variables
 const int BOARD_WIDTH = 8;
 const Coordinate EMPTY_COORDS = Coordinate{-1, -1};
 
 class Board {
+
+    // private data members
     Piece grid[BOARD_WIDTH][BOARD_WIDTH];
     Coordinate enPassantVictim = EMPTY_COORDS;
     Coordinate lastMoveStart = EMPTY_COORDS;
     Coordinate lastMoveEnd = EMPTY_COORDS;
 
-    // TODO stack of each move taken so far
-
+    // private member functions
     bool coordsInRange(Coordinate p) const noexcept;
     Team getEnemyTeam(Team team) const noexcept;
     Coordinate getKingCoords(Team team) const noexcept;
@@ -34,12 +42,17 @@ class Board {
     void notifyPromotion() const noexcept;
 
     public:
+        // constructors
         Board();
+
+        // board moves
         void makeMove(Coordinate s, Coordinate d, char promotion = '\0');
         void setSquare(Coordinate p, Piece piece);
         void clearSquare(Coordinate p);
         void promote(Coordinate p);
         Piece getSquare(Coordinate p) const;
+
+        // board queries
         bool isSquareThreatened(Team threatenedTeam, Coordinate p) const noexcept;
         bool isValidMove(Coordinate s, Coordinate d) const;
         bool isInCheck(Team threatenedTeam) const noexcept;

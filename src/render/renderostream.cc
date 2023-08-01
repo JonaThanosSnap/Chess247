@@ -5,9 +5,17 @@
 #include "../team.h"
 #include <iostream>
 
+/////////////////////////////////////
+//                                 //
+//   Render Ostream Implementation //
+//                                 //
+/////////////////////////////////////
+
+// render ostream constructor
 RenderOStream::RenderOStream(Board* board, std::ostream& out): 
     ChessRender{board}, out{out} {};
 
+// get the char to display for a given piece
 char RenderOStream::getPieceChar(const Piece& piece) const {
     // determine what char to use to display a given piece
     // use switch case for expandability + factor in team
@@ -70,6 +78,7 @@ char RenderOStream::getPieceChar(const Piece& piece) const {
     return ' ';
 }
 
+// render the board to the ostream
 void RenderOStream::render() {
     for (int i=0; i < 8; i++) {
         // rank

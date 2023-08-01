@@ -1,9 +1,17 @@
 #include "aiplayerlevel3.h"
 
+/////////////////////////////////////
+//                                 //
+// AI Player Level 3 Implementation//
+//                                 //
+/////////////////////////////////////
+
+// constructor
 AIPlayerLevel3::AIPlayerLevel3(Board* board, Team t): AIPlayer{board} {
     team = t;
 };
 
+// getMove
 std::pair<Coordinate, Coordinate> AIPlayerLevel3::getMove() {
     // return a random legal move preferring captures and checks
 

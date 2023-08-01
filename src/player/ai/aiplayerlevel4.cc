@@ -1,9 +1,17 @@
 #include "aiplayerlevel4.h"
 
+/////////////////////////////////////
+//                                 //
+// AI Player Level 4 Implementation//
+//                                 //
+/////////////////////////////////////
+
+// constructor
 AIPlayerLevel4::AIPlayerLevel4(Board* board, Team t): AIPlayer{board} {
     team = t;
 };
 
+// get the value of a piece
 int AIPlayerLevel4::getPieceValue(Piece::Type type) {
     switch (type) {
         case Piece::Type::None:

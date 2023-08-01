@@ -1,6 +1,12 @@
 #ifndef CHESS_RENDER_H_
 #define CHESS_RENDER_H_
 
+/////////////////////////////////////
+//                                 //
+//       Chess Render Header       //
+//                                 //
+/////////////////////////////////////
+
 // forward declaration for board ptr
 class Board;
 class Coordinate;

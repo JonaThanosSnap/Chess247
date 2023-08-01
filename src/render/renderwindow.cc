@@ -1,7 +1,13 @@
 #include "renderwindow.h"
-
 #include <algorithm>
 
+/////////////////////////////////////
+//                                 //
+//   Render Window Implementation  //
+//                                 //
+/////////////////////////////////////
+
+// constructor
 RenderWindow::RenderWindow(Board* board): ChessRender{board} {
     // Set up colors
     window.addColor(Color::Black, "00", "00", "00");
@@ -99,16 +105,19 @@ RenderWindow::RenderWindow(Board* board): ChessRender{board} {
     setRandomPieceSet();
 }
 
+// add theme
 void RenderWindow::addTheme(const BoardTheme& theme) {
     boardThemes.push_back(theme);
 }
 
+// set the theme
 void RenderWindow::setTheme(const std::string& name) {
     for (int i = 0; i < boardThemes.size(); i++) {
         if (boardThemes[i].name == name) currentBoardTheme = i;
     }
 }
 
+// add a piece set
 void RenderWindow::addPieceSet(const std::string& folder_path) {
     const std::string teams[] = {
         "B", "W"
@@ -155,12 +164,14 @@ void RenderWindow::addPieceSet(const std::string& folder_path) {
     pieceSets.push_back(newPieceSet);
 }
 
+// set the piece set
 void RenderWindow::setPieceSet(const std::string& folder_path) {
     for (int i = 0; i < pieceSets.size(); i++) {
         if (pieceSets[i].name == folder_path) currentBoardTheme = i;
     }
 }
 
+// get the piece image
 std::string RenderWindow::getPieceImage(Piece piece) const {
     Team pieceTeam = piece.getTeam();
     Piece::Type pieceType = piece.getType();
@@ -194,22 +205,27 @@ std::string RenderWindow::getPieceImage(Piece piece) const {
     return pieceImagePath;
 }
 
+// cycle the theme
 void RenderWindow::cycleTheme() {
     currentBoardTheme = (currentBoardTheme + 1) % boardThemes.size();
 }
 
+// cycle piece set
 void RenderWindow::cyclePieceSet() {
     currentPieceSet = (currentPieceSet + 1) % pieceSets.size();
 }
 
+// set a random theme
 void RenderWindow::setRandomTheme() {
     currentBoardTheme = std::rand() % boardThemes.size();
 }
 
+// set random piece set
 void RenderWindow::setRandomPieceSet() {
     currentPieceSet = std::rand() % pieceSets.size();
 }
 
+// render
 void RenderWindow::render() {
     // Draw bg
     window.fillRectangle(0, 0, WINDOW_W, WINDOW_W, boardThemes[currentBoardTheme].bgColor);

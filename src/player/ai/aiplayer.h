@@ -3,15 +3,20 @@
 #include "../player.h"
 #include "../../board.h"
 
+/////////////////////////////////////
+//                                 //
+//         AI Player Header        //
+//                                 //
+/////////////////////////////////////
+
 // abstract aiplayer class which
 // includes reference to a board
 class AIPlayer : public Player {
 protected:
     Board* board;
 public:
-    AIPlayer(Board* board): board{board} {
-        isHuman = false;
-    };
+    // constructor
+    AIPlayer(Board* board);
 };
 
 #endif

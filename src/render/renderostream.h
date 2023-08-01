@@ -4,6 +4,12 @@
 #include "../coordinate.h"
 #include <iostream>
 
+/////////////////////////////////////
+//                                 //
+//       Render Ostream Header     //
+//                                 //
+/////////////////////////////////////
+
 // forward declaration for Board,Piece ptr
 class Board;
 class Piece;

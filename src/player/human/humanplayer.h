@@ -2,11 +2,16 @@
 #define HUMAN_PLAYER_H_
 #include "../player.h"
 
+/////////////////////////////////////
+//                                 //
+//       Human Player Header       //
+//                                 //
+/////////////////////////////////////
+
 class HumanPlayer : public Player{
 public:
-    HumanPlayer() {
-        isHuman = true;
-    }    
+    // constructor
+    HumanPlayer();  
 };
 
 #endif

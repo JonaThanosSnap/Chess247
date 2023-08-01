@@ -9,6 +9,13 @@
 
 #include <vector>
 
+/////////////////////////////////////
+//                                 //
+//      Render Window Header       //
+//                                 //
+/////////////////////////////////////
+
+// window dimensions
 const unsigned int WINDOW_W = 600;
 const unsigned int BOARD_W = 512;
 const unsigned int SQUARE_W = BOARD_W/BOARD_WIDTH;
@@ -16,6 +23,7 @@ const unsigned int PIECE_W = 48;
 const unsigned int BOARD_MARGIN = (WINDOW_W - BOARD_W)/2;
 const Coordinate BOARD_TOP_LEFT = Coordinate{BOARD_MARGIN, BOARD_MARGIN};
 
+// color enum
 enum Color {
     White = 0,
     Black,
@@ -46,6 +54,7 @@ enum Color {
     AutumnBg,
 };
 
+// board theme struct
 struct BoardTheme {
     std::string name;
     Color blackSquareColor;
@@ -56,6 +65,7 @@ struct BoardTheme {
     Color textColor;
 };
 
+// piece set struct
 struct TeamPieceSet {
     std::string pawn;
     std::string rook;
@@ -65,12 +75,14 @@ struct TeamPieceSet {
     std::string king;
 };
 
+// piece set struct
 struct PieceSet {
     std::string name;
     TeamPieceSet white;
     TeamPieceSet black;
 };
 
+// render window class
 class RenderWindow : public ChessRender {
     Xwindow window{WINDOW_W, WINDOW_W};
 

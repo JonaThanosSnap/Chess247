@@ -9,6 +9,13 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
+/////////////////////////////////////
+//                                 //
+//       Window Implementation     //
+//                                 //
+/////////////////////////////////////
+
+// Constructor; displays the window.
 Xwindow::Xwindow(int width, int height) {
     d = XOpenDisplay(NULL);
     if (d == NULL) {
@@ -55,6 +62,7 @@ Xwindow::Xwindow(int width, int height) {
     usleep(1000);
 }
 
+// destructor; destroys the window.
 Xwindow::~Xwindow() {
     for (auto kv : imageMap) {
         XDestroyImage(kv.second);
@@ -63,6 +71,7 @@ Xwindow::~Xwindow() {
     XCloseDisplay(d);
 }
 
+// Add color
 void Xwindow::addColor(int color, char* r, char* g, char* b) {
     std::string colorString = "rgb:";
     colorString = colorString + r + "/" + g + "/" + b;
@@ -74,16 +83,19 @@ void Xwindow::addColor(int color, char* r, char* g, char* b) {
     colorMap[color] = xcolor.pixel;
 }
 
+// get color
 unsigned long Xwindow::getColor(int color) const {
     return colorMap.at(color);
 }
 
+// fill rectangle
 void Xwindow::fillRectangle(int x, int y, int width, int height, int color) {
     XSetForeground(d, gc, getColor(color));
     XFillRectangle(d, w, gc, x, y, width, height);
     XSetForeground(d, gc, Black);
 }
 
+// draw string
 void Xwindow::drawString(int x, int y, std::string msg, int color) {
     XSetForeground(d, gc, getColor(color));
     XDrawString(d, w, gc, x, y, msg.c_str(), msg.length());
