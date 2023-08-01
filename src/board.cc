@@ -33,8 +33,9 @@ Board::Board() {
     // history.push_back(*this);
 }
 
-void Board::makeMove(Coordinate s, Coordinate d) {
+void Board::makeMove(Coordinate s, Coordinate d, char promotion) {
     // Precondition: isValidMove(s, d) is true
+    //std::cout << "(" << s.x() << ", " << s.y() << ")" << std::endl;
     Piece piece = getSquare(s);
     piece.setHasMoved(true);
 
@@ -82,9 +83,6 @@ void Board::makeMove(Coordinate s, Coordinate d) {
         }
 
         if((piece.getTeam() == Team::White && d.y() == 7) || (piece.getTeam() == Team::Black && d.y() == 0)){
-            char promotion;
-
-            std::cin >> promotion;
 
             switch(promotion) {
 
@@ -101,6 +99,8 @@ void Board::makeMove(Coordinate s, Coordinate d) {
                     setSquare(d, Piece::Knight(piece.getTeam()));
                     break;
                 default:
+                    clearSquare(d);
+                    setSquare(s, piece);
                     throw InvalidPromotionException();
                     break;
             }
@@ -243,7 +243,7 @@ std::vector<Coordinate> Board::getValidMovesPawn(Coordinate p) const {
     if(!getSquare(p).getHasMoved()){
         Coordinate inFront = p + deltas[0];
         Coordinate inFront2 = inFront + deltas[0];
-        if(getSquare(inFront) == Piece::Empty() && getSquare(inFront2) == Piece::Empty()){
+        if(coordsInRange(inFront2) && getSquare(inFront) == Piece::Empty() && getSquare(inFront2) == Piece::Empty()){
             deltas.push_back(Coordinate{0, team == Team::White ? 2 : -2});
         } 
     }

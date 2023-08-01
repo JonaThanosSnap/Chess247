@@ -9,14 +9,14 @@ void Chess::endGame() noexcept {
     isGameStarted = false;
 }
 
-void Chess::makeMove(Coordinate s, Coordinate d) {
+void Chess::makeMove(Coordinate s, Coordinate d, char promotion) {
     if (!board.isValidMove(s, d)) throw InvalidMoveException{};
     if (!isGameStarted) throw GameNotStartedException{};
-
+    //std::cout << "(" << s.x() << ", " << s.y() << ")" << std::endl;
     Piece piece = board.getSquare(s);
     if (piece.getTeam() != currentTeam) throw InvalidMoveException{};
 
-    board.makeMove(s, d);
+    board.makeMove(s, d, promotion);
 
     currentTeam = (currentTeam == Team::White) ? Team::Black : Team::White;
 
@@ -24,6 +24,7 @@ void Chess::makeMove(Coordinate s, Coordinate d) {
 
 void Chess::setupEnter() noexcept {
     isSetupMode = true;
+    justSetup = true;
 }
 
 void Chess::setupExit() noexcept {
@@ -81,19 +82,27 @@ std::string Chess::winner() {
 }
 
 
-Team Chess::resign(){
+Team Chess::resign() {
     Team loser = currentTeam;
     scores[loser == Team::White ? 1 : 0] += 1;
     endGame();
     return (loser == Team::White) ? Team::Black : Team::White;
 }
 
-void Chess::boardReset(){
+void Chess::boardReset() {
     board = Board();
 }
 
-void Chess::finalScores(){
+void Chess::finalScores() const noexcept {
     std::cout << "Final Score:" << std::endl;
     std::cout << "White: " << scores[0] << std::endl;
     std::cout << "Black: " << scores[1] << std::endl;
+}
+
+bool Chess::isJustSetup() const noexcept {
+    return justSetup;
+}
+
+void Chess::finishedSetup() noexcept {
+    justSetup = false;
 }

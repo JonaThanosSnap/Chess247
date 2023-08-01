@@ -11,6 +11,7 @@
 class Chess {
     bool isSetupMode = false;
     bool isGameStarted = false;
+    bool justSetup = false;
 
     Board board;
     Team currentTeam = Team::White;
@@ -21,7 +22,7 @@ class Chess {
     public:
         void startGame() noexcept;
         void endGame() noexcept;
-        void makeMove(Coordinate s, Coordinate d);
+        void makeMove(Coordinate s, Coordinate d, char promotion);
         void setupEnter() noexcept;
         void setupExit() noexcept;
         void setupPlacePiece(Coordinate p, Piece piece);
@@ -35,7 +36,9 @@ class Chess {
         std::string winner();
         Team resign();
         void boardReset();
-        void finalScores();
+        void finalScores() const noexcept;
+        bool isJustSetup() const noexcept;
+        void finishedSetup() noexcept;
 };
 
 #endif
