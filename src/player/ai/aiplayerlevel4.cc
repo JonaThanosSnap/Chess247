@@ -35,6 +35,17 @@ std::pair<Coordinate, Coordinate> AIPlayerLevel4::getMove() {
     // to do this, we:
     //  1. maintain a list of prefered moves (that capture or check)
 
+    // TODO removeme
+    for (int i = 0; i < 8; ++i) {
+        for (int j = 0; j < 8; ++j) {
+            Coordinate c{i, j};
+            Piece piece = board->getSquare(c);
+            if (piece != Piece::Empty()) {
+                std::cout << c.toString() << " (" << (int)piece.getType() << ") hasMoved: " << piece.getHasMoved() << std::endl;
+            }
+        }
+    }
+
     std::vector<std::pair<Coordinate, Coordinate>> possibleMoves;
     std::vector<std::pair<Coordinate, Coordinate>> preferredMoves;
 

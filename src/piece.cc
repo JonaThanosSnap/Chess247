@@ -4,9 +4,9 @@ Piece::Piece(Type type, Team team): type{type}, team{team} {};
 
 Piece::Piece(): type{Type::None}, team{Team::White} {};
 
-Piece::Piece(const Piece& other): type{other.type}, team{other.team} {};
+Piece::Piece(const Piece& other): type{other.type}, team{other.team}, hasMoved{other.hasMoved} {};
 
-Piece::Piece(Piece&& other): type{other.type}, team{other.team} {};
+Piece::Piece(Piece&& other): type{other.type}, team{other.team}, hasMoved{other.hasMoved} {};
 
 Piece::Type Piece::getType() const noexcept {
     return type;
@@ -17,7 +17,7 @@ Team Piece::getTeam() const noexcept {
 };
 
 void Piece::setHasMoved(bool value) noexcept {
-    hasMoved = true;
+    hasMoved = value;
 }
 
 bool Piece::getHasMoved() const noexcept {
@@ -55,11 +55,13 @@ Piece Piece::King(Team team) {
 void Piece::operator=(const Piece& other) {
     type = other.type;
     team = other.team;
+    hasMoved = other.hasMoved;
 }
 
 void Piece::operator=(Piece&& other) {
     type = other.type;
     team = other.team;
+    hasMoved = other.hasMoved;
 }
 
 bool Piece::operator==(const Piece& other) {

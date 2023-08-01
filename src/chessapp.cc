@@ -6,8 +6,18 @@ void ChessApp::playGame(){
     for(;;) { 
         // ask input manager to take input
         // render
+        int end;
+        while (true) {
+            try {
+                end = inputManager.handleInput();
+                break;
+            } catch (std::exception& e) {
+                std::cout << e.what() << std::endl;
+                std::cout << "HTTP ERROR 500: INTERNAL SERVER ERROR. TRY AGAIN" << std::endl;
+                exit(1);
+            }
+        }
 
-        int end = inputManager.handleInput();
         if(end == 1) {
             chess.finalScores();
             break;

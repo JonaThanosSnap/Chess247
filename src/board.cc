@@ -35,6 +35,8 @@ Board::Board() {
 
 void Board::makeMove(Coordinate s, Coordinate d, char promotion) {
     // Precondition: isValidMove(s, d) is true
+    std::cout << s.toString() << " omw to " << d.toString() << std::endl;
+
     Piece piece = getSquare(s);
     piece.setHasMoved(true);
 
@@ -60,8 +62,8 @@ void Board::makeMove(Coordinate s, Coordinate d, char promotion) {
 
         // Move rook to opposite side of king
         clearSquare(rookCoords);
-        setSquare(d - delta, rookPiece);
         rookPiece.setHasMoved(true);
+        setSquare(d - delta, rookPiece);
     }
 
     // Pawn logic
@@ -83,19 +85,19 @@ void Board::makeMove(Coordinate s, Coordinate d, char promotion) {
 
         if((piece.getTeam() == Team::White && d.y() == 7) || (piece.getTeam() == Team::Black && d.y() == 0)){
 
+            Piece promotedPiece;
             switch(promotion) {
-
                 case('q'):
-                    setSquare(d, Piece::Queen(piece.getTeam()));
+                    promotedPiece = Piece::Queen(piece.getTeam());
                     break;
                 case('r'):
-                    setSquare(d, Piece::Rook(piece.getTeam()));
+                    promotedPiece = Piece::Rook(piece.getTeam());
                     break;
                 case('b'):
-                    setSquare(d, Piece::Bishop(piece.getTeam()));
+                    promotedPiece = Piece::Bishop(piece.getTeam());
                     break;
                 case('n'):
-                    setSquare(d, Piece::Knight(piece.getTeam()));
+                    promotedPiece = Piece::Knight(piece.getTeam());
                     break;
                 default:
                     clearSquare(d);
@@ -103,6 +105,7 @@ void Board::makeMove(Coordinate s, Coordinate d, char promotion) {
                     throw InvalidPromotionException();
                     break;
             }
+            setSquare(d, promotedPiece);
         }
     }
 
@@ -137,7 +140,10 @@ void Board::clearSquare(Coordinate p) {
 
 // retrieves the piece at coordiante p
 Piece Board::getSquare(Coordinate p) const {
-    if (!coordsInRange(p)) throw std::out_of_range("Board::getSquare: coords out of range");
+    if (!coordsInRange(p)) {
+        std::cout << p.toString() << std::endl;
+        throw std::out_of_range("Board::getSquare: coords out of range");
+    };
     return grid[p.y()][p.x()];
 }
 
@@ -148,8 +154,16 @@ bool Board::isValidMove(Coordinate s, Coordinate d) const {
     //  - check that the move is valid without considering checks
     //  - check if we end the turn with the king in check
     
-    if (!coordsInRange(s)) throw std::out_of_range("Board::isValidMove: start position out of range");
-    if (!coordsInRange(d)) throw std::out_of_range("Board::isValidMove: end position out of range");
+    if (!coordsInRange(s)) {
+        std::cout << s.toString() << std::endl;
+        std::cout << d.toString() << std::endl;
+        throw std::out_of_range("Board::isValidMove: start position out of range");
+    }
+    if (!coordsInRange(d)) {
+        std::cout << s.toString() << std::endl;
+        std::cout << d.toString() << std::endl;
+        throw std::out_of_range("Board::isValidMove: end position out of range");
+    }
 
     Piece piece = getSquare(s);
     Piece::Type pieceType = piece.getType();
