@@ -35,7 +35,6 @@ Board::Board() {
 
 void Board::makeMove(Coordinate s, Coordinate d, char promotion) {
     // Precondition: isValidMove(s, d) is true
-    std::cout << s.toString() << " omw to " << d.toString() << std::endl;
 
     Piece piece = getSquare(s);
     piece.setHasMoved(true);

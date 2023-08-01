@@ -45,8 +45,6 @@ std::pair<Coordinate, Coordinate> AIPlayerLevel2::getMove() {
 
     srand(time(0));
 
-    std::cout << "size of: " << preferredMoves.size() << std::endl;
-
     if (preferredMoves.size() == 0) {
         return possibleMoves[rand() % possibleMoves.size()];
     } else {
