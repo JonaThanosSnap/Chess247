@@ -37,9 +37,8 @@ int InputManager::handleInput() {
             game->setPlayer(Team::White, new AIPlayerLevel2{game->getBoard(), Team::White});
         } else if (white == "computer3") {
             game->setPlayer(Team::White, new AIPlayerLevel3{game->getBoard(), Team::White});
-        // } else if (white == "computer4") {
-        //     game->setPlayer(Team::White, new AIPlayerLevel4{game->getBoard()});
-        //
+        } else if (white == "computer4") {
+            game->setPlayer(Team::White, new AIPlayerLevel4{game->getBoard(), Team::White});
         } else {
             std::cout << "This is not a valid option for white. Valid options: human, computer<1-4>." << std::endl;
             return 0;
@@ -53,9 +52,8 @@ int InputManager::handleInput() {
             game->setPlayer(Team::Black, new AIPlayerLevel2{game->getBoard(), Team::Black});
         } else if (black == "computer3") {
             game->setPlayer(Team::Black, new AIPlayerLevel3{game->getBoard(), Team::Black});
-        // } else if (black == "computer4") {
-        //     game->setPlayer(Team::Black, new AIPlayerLevel4{game->getBoard()});
-        //
+        } else if (black == "computer4") {
+            game->setPlayer(Team::Black, new AIPlayerLevel4{game->getBoard(), Team::Black});
         } else {
             std::cout << "This is not a valid option for black. Valid options: human, computer<1-4>." << std::endl;
             return 0;
@@ -123,6 +121,7 @@ int InputManager::handleInput() {
             } else {
                 std::cout << "Checkmate! " << game->winner() << " wins!" << std::endl;
             }
+            render->render();
             game->endGame();
             return 0;
         }

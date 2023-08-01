@@ -3,7 +3,10 @@
 #include "aiplayer.h"
 
 class AIPlayerLevel4 : public AIPlayer {
-
+public:
+    AIPlayerLevel4(Board*, Team);
+    int getPieceValue(Piece::Type); 
+    std::pair<Coordinate, Coordinate> getMove() override;
 };
 
 #endif
