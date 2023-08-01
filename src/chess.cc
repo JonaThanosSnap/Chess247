@@ -71,6 +71,10 @@ bool Chess::getIsGameStarted() const noexcept {
     return isGameStarted;
 }
 
+bool Chess::getIsSetupMode() const noexcept {
+    return isSetupMode;
+}
+
 std::string Chess::winner() {
     if(board.isCheckMate(currentTeam)){
         Team loser = currentTeam;

@@ -12,64 +12,67 @@
 InputManager::InputManager(Chess* chess, ChessRender* chessRender): game{chess}, render{chessRender} {};
 
 int InputManager::handleInput() {
-    // std::cout << "hi";
     // read in one command at a time and handle it
     std::string cmd;
     std::cin >> cmd;
 
     if (cmd == "game") {
+        // start a new game
+
+        // make sure the game has started
+        if (game->getIsGameStarted()) {
+            std::cout << "Cannot create a new game, there is a game in progress." << std::endl;
+            return 0;
+        }
 
         game->boardReset();
-        // start a new game
+        
         std::string white, black;
-        // std::cout << "Enter a player type for white: ";
+        std::cin >> white >> black;
+        // take in both inputs at once and ensure they are both wellformed
 
-        while (std::cin >> white) {
-            // ensure player type input is wellformed
-            if (white == "human") {
-                game->setPlayer(Team::White, new HumanPlayer{});
-                break;
-            } else if (white == "computer1") {
-                game->setPlayer(Team::White, new AIPlayerLevel1{game->getBoard(), Team::White});
-                break;
-            } else if (white == "computer2") {
-                game->setPlayer(Team::White, new AIPlayerLevel2{game->getBoard(), Team::White});
-                break;
-            } else if (white == "computer3") {
-                game->setPlayer(Team::White, new AIPlayerLevel3{game->getBoard(), Team::White});
-                break;
-            // } else if (white == "computer4") {
-            //     game->setPlayer(Team::White, new AIPlayerLevel4{game->getBoard()});
-            //     break;
-            } else {
-                std::cout << "This is not a valid option for white. Valid options: human, computer<1-4>." << std::endl;
-            }
+        if (white == "human") {
+            game->setPlayer(Team::White, new HumanPlayer{});
+        } else if (white == "computer1") {
+            game->setPlayer(Team::White, new AIPlayerLevel1{game->getBoard(), Team::White});
+        } else if (white == "computer2") {
+            game->setPlayer(Team::White, new AIPlayerLevel2{game->getBoard(), Team::White});
+        } else if (white == "computer3") {
+            game->setPlayer(Team::White, new AIPlayerLevel3{game->getBoard(), Team::White});
+        // } else if (white == "computer4") {
+        //     game->setPlayer(Team::White, new AIPlayerLevel4{game->getBoard()});
+        //
+        } else {
+            std::cout << "This is not a valid option for white. Valid options: human, computer<1-4>." << std::endl;
+            return 0;
         }
 
-        // std::cout << "Enter a player type for black: ";
-        while (std::cin >> black) {
-            if (black == "human") {
-                game->setPlayer(Team::Black, new HumanPlayer{});
-                break;
-            } else if (black == "computer1") {
-                game->setPlayer(Team::Black, new AIPlayerLevel1{game->getBoard(), Team::Black});
-                break;
-            } else if (black == "computer2") {
-                game->setPlayer(Team::Black, new AIPlayerLevel2{game->getBoard(), Team::Black});
-                break;
-            } else if (black == "computer3") {
-                game->setPlayer(Team::Black, new AIPlayerLevel3{game->getBoard(), Team::Black});
-                break;
-            // } else if (black == "computer4") {
-            //     game->setPlayer(Team::Black, new AIPlayerLevel4{game->getBoard()});
-            //     break;
-            } else {
-                std::cout << "This is not a valid option for black. Valid options: human, computer<1-4>." << std::endl;
-            }
+        if (black == "human") {
+            game->setPlayer(Team::Black, new HumanPlayer{});
+        } else if (black == "computer1") {
+            game->setPlayer(Team::Black, new AIPlayerLevel1{game->getBoard(), Team::Black});
+        } else if (black == "computer2") {
+            game->setPlayer(Team::Black, new AIPlayerLevel2{game->getBoard(), Team::Black});
+        } else if (black == "computer3") {
+            game->setPlayer(Team::Black, new AIPlayerLevel3{game->getBoard(), Team::Black});
+        // } else if (black == "computer4") {
+        //     game->setPlayer(Team::Black, new AIPlayerLevel4{game->getBoard()});
+        //
+        } else {
+            std::cout << "This is not a valid option for black. Valid options: human, computer<1-4>." << std::endl;
+            return 0;
         }
+
+        // start game if inputs are wellformed
         game->startGame();
 
     } else if (cmd == "resign") {
+        // make sure the game has started
+        if (!game->getIsGameStarted()) {
+            std::cout << "Cannot resign, game has not been started." << std::endl;
+            return 0;
+        }
+
         Team loser = game->resign();
         std::cout << (loser == Team::White ? "White" : "Black") << " wins!" << std::endl;
         
@@ -79,6 +82,13 @@ int InputManager::handleInput() {
         // move pieces depending on the current player's turn.
         // if human player, they need to enter start/dest coords.
         // if ai player, the move command is enough
+        
+        // make sure the game has started
+        if (!game->getIsGameStarted()) {
+            std::cout << "Cannot move, game has not been started." << std::endl;
+            return 0;
+        }
+
         Player* currentPlayer = game->getCurrentPlayer();
         bool isHuman = currentPlayer->isHumanPlayer();
 
@@ -94,7 +104,7 @@ int InputManager::handleInput() {
                 game->makeMove(s, e);
             } catch (std::exception& e) {
                 std::cout << "Your move could not be made. Try again." << std::endl;
-                std::cout << e.what() << std::endl;
+                // std::cout << e.what() << std::endl;
             }
         } else {
             std::pair<Coordinate, Coordinate> move = currentPlayer->getMove();
@@ -226,7 +236,3 @@ void InputManager::enterSetupMode(){
         }
     }
 };
-
-
-
-
