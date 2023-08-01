@@ -6,14 +6,44 @@ RenderWindow::RenderWindow(Board* board): ChessRender{board} {
     // Set up colors
     window.addColor(Color::Black, "00", "00", "00");
     window.addColor(Color::White, "ff", "ff", "ff");
+
+    // ChessDotCom Colors
     window.addColor(Color::ChessDotComBlack, "76", "96", "56");
     window.addColor(Color::ChessDotComWhite, "ee", "ee", "d2");
     window.addColor(Color::ChessDotComBlackHighlight, "f0", "80", "3c");
     window.addColor(Color::ChessDotComWhiteHighlight, "ff", "93", "4f");
     window.addColor(Color::ChessDotComBg, "36", "46", "52");
 
+    // Cherry Colors
+    window.addColor(Color::CherryBlack, "a4", "48", "68");
+    window.addColor(Color::CherryWhite, "ed", "d6", "d1");
+    window.addColor(Color::CherryBlackHighlight, "e0", "8e", "6d");
+    window.addColor(Color::CherryWhiteHighlight, "f6", "c3", "91");
+    window.addColor(Color::CherryBg, "36", "38", "2e");
+
+    // Romania Colors
+    window.addColor(Color::RomaniaBlack, "ce", "11", "26");
+    window.addColor(Color::RomaniaWhite, "fc", "d1", "16");
+    window.addColor(Color::RomaniaBlackHighlight, "00", "2b", "7f");
+    window.addColor(Color::RomaniaWhiteHighlight, "00", "2b", "7f");
+    window.addColor(Color::RomaniaBg, "23", "1c", "07");
+
+    // Winter Colors
+    window.addColor(Color::WinterBlack, "61", "91", "ae");
+    window.addColor(Color::WinterWhite, "dd", "e6", "ed");
+    window.addColor(Color::WinterBlackHighlight, "27", "37", "4d");
+    window.addColor(Color::WinterWhiteHighlight, "52", "6d", "82");
+    window.addColor(Color::WinterBg, "36", "14", "1e");
+
+    // Autumn Colors
+    window.addColor(Color::AutumnBlack, "d4", "9a", "57");
+    window.addColor(Color::AutumnWhite, "e7", "cc", "b3");
+    window.addColor(Color::AutumnBlackHighlight, "d8", "6a", "54");
+    window.addColor(Color::AutumnWhiteHighlight, "f7", "9b", "81");
+    window.addColor(Color::AutumnBg, "42", "27", "15");
+
     addTheme(BoardTheme{
-        "chess_dot_com",
+        "ChessDotCom",
         Color::ChessDotComBlack,
         Color::ChessDotComWhite,
         Color::ChessDotComBlackHighlight,
@@ -21,12 +51,52 @@ RenderWindow::RenderWindow(Board* board): ChessRender{board} {
         Color::ChessDotComBg,
         Color::ChessDotComWhite
     });
-    setTheme("chess_dot_com");
+    addTheme(BoardTheme{
+        "Cherry",
+        Color::CherryBlack,
+        Color::CherryWhite,
+        Color::CherryBlackHighlight,
+        Color::CherryWhiteHighlight,
+        Color::CherryBg,
+        Color::CherryWhite
+    });
+    addTheme(BoardTheme{
+        "Romania",
+        Color::RomaniaBlack,
+        Color::RomaniaWhite,
+        Color::RomaniaBlackHighlight,
+        Color::RomaniaWhiteHighlight,
+        Color::RomaniaBg,
+        Color::RomaniaWhite
+    });
+    addTheme(BoardTheme{
+        "Winter",
+        Color::WinterBlack,
+        Color::WinterWhite,
+        Color::WinterBlackHighlight,
+        Color::WinterWhiteHighlight,
+        Color::WinterBg,
+        Color::WinterWhite
+    });
+    addTheme(BoardTheme{
+        "Autumn",
+        Color::AutumnBlack,
+        Color::AutumnWhite,
+        Color::AutumnBlackHighlight,
+        Color::AutumnWhiteHighlight,
+        Color::AutumnBg,
+        Color::AutumnWhite
+    });
+    //setTheme("chess_dot_com");
+    setRandomTheme();
 
     // Set up images
     addPieceSet("assets/chess_dot_com");
     addPieceSet("assets/irl");
-    setPieceSet("assets/chess_dot_com");
+    addPieceSet("assets/neon");
+    addPieceSet("assets/newspaper");
+    //setPieceSet("assets/chess_dot_com");
+    setRandomPieceSet();
 }
 
 void RenderWindow::addTheme(const BoardTheme& theme) {

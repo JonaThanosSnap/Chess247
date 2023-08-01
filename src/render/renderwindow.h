@@ -23,7 +23,27 @@ enum Color {
     ChessDotComBlack,
     ChessDotComBlackHighlight,
     ChessDotComWhiteHighlight,
-    ChessDotComBg
+    ChessDotComBg,
+    CherryWhite,
+    CherryBlack,
+    CherryBlackHighlight,
+    CherryWhiteHighlight,
+    CherryBg,
+    RomaniaWhite,
+    RomaniaBlack,
+    RomaniaBlackHighlight,
+    RomaniaWhiteHighlight,
+    RomaniaBg,    
+    WinterWhite,
+    WinterBlack,
+    WinterBlackHighlight,
+    WinterWhiteHighlight,
+    WinterBg,
+    AutumnWhite,
+    AutumnBlack,
+    AutumnBlackHighlight,
+    AutumnWhiteHighlight,
+    AutumnBg,
 };
 
 struct BoardTheme {
