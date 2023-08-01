@@ -10,10 +10,11 @@ class InputManager {
 private:
     Chess* game;
     ChessRender* render;
+    ChessRender* backupRenderer;
     bool justSetup = false;
     void enterSetupMode();
 public:
-    InputManager(Chess*, ChessRender*);
+    InputManager(Chess*, ChessRender*, ChessRender*);
     int handleInput();
 };
 

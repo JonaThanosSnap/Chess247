@@ -9,7 +9,7 @@
 #include <string>
 #include <iostream>
 
-InputManager::InputManager(Chess* chess, ChessRender* chessRender): game{chess}, render{chessRender} {};
+InputManager::InputManager(Chess* chess, ChessRender* chessRender, ChessRender* backupRenderer): game{chess}, render{chessRender}, backupRenderer{backupRenderer} {};
 
 int InputManager::handleInput() {
     // read in one command at a time and handle it
@@ -122,6 +122,7 @@ int InputManager::handleInput() {
                 std::cout << "Checkmate! " << game->winner() << " wins!" << std::endl;
             }
             render->render();
+            backupRenderer->render();
             game->endGame();
             return 0;
         }
@@ -195,6 +196,7 @@ void InputManager::enterSetupMode(){
             game->setupPlacePiece(location, newPiece);
 
             render->render();
+            backupRenderer->render();
 
         }
         else if(cmd == "-"){
@@ -207,6 +209,7 @@ void InputManager::enterSetupMode(){
             game->setupRemovePiece(location);
 
             render->render();
+            backupRenderer->render();
         }
 
         else if(cmd == "="){

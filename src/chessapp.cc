@@ -1,6 +1,6 @@
 #include "chessapp.h"
 
-ChessApp::ChessApp(): chess{}, render{chess.getBoard(), std::cout}, renderWindow{chess.getBoard()}, inputManager{&chess, &render} {};
+ChessApp::ChessApp(): chess{}, render{chess.getBoard(), std::cout}, renderWindow{chess.getBoard()}, inputManager{&chess, &render, &renderWindow} {};
 //ChessApp::ChessApp(): chess{}, render{chess.getBoard(), std::cout}, inputManager{&chess, &render} {};
 void ChessApp::playGame(){
     for(;;) { 
