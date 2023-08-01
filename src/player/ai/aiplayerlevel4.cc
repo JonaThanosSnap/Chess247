@@ -36,7 +36,6 @@ std::pair<Coordinate, Coordinate> AIPlayerLevel4::getMove() {
     //  1. maintain a list of prefered moves (that capture or check)
 
     std::vector<std::pair<Coordinate, Coordinate>> possibleMoves;
-    std::vector<std::pair<Coordinate, Coordinate>> mildPreferredMoves;
     std::vector<std::pair<Coordinate, Coordinate>> preferredMoves;
 
     for (int i=0; i < 8; i++) {
@@ -54,12 +53,7 @@ std::pair<Coordinate, Coordinate> AIPlayerLevel4::getMove() {
                 if (!board->isValidMove(currSquare, v)) {
                     continue;
                 }
-
-                preferredMoves.push_back(std::make_pair(currSquare, v));
-
-                if (!board->isSquareThreatened(team, v)) {
-                    mildPreferredMoves.push_back(std::make_pair(currSquare, v));
-                }
+                possibleMoves.push_back(std::make_pair(currSquare, v));
 
                 // if this move escapes capture, captures, or checks, prefer it
 
@@ -73,22 +67,22 @@ std::pair<Coordinate, Coordinate> AIPlayerLevel4::getMove() {
                     }
 
                     for (int i=0; i < pieceValue; i++) {
-                        possibleMoves.push_back(std::make_pair(currSquare, v));
+                        preferredMoves.push_back(std::make_pair(currSquare, v));
                     }
                 } 
                 if (board->isCheckingMove(currSquare, v)) {
-                    // check. weight this move by 12. if square is protected, reduce weight to 0
-                    int weight = board->isSquareThreatened(team, v) ? 0 : 12;
+                    // check. weight this move by 12. if square is protected, reduce weight to 1
+                    int weight = board->isSquareThreatened(team, v) ? 1 : 12;
 
                     for (int i=0; i < weight; i++) {
-                        possibleMoves.push_back(std::make_pair(currSquare, v));
+                        preferredMoves.push_back(std::make_pair(currSquare, v));
                     }
                 }
                 if (board->isSquareThreatened(team, currSquare) 
                             && !board->isSquareThreatened(team, v)) {
                     // escape capture. weight this move by the value of the escaping piece
                     for (int i=0; i < getPieceValue(board->getSquare(currSquare).getType()); i++) {
-                        possibleMoves.push_back(std::make_pair(currSquare, v));
+                        preferredMoves.push_back(std::make_pair(currSquare, v));
                     }
                 }
             }
@@ -97,10 +91,8 @@ std::pair<Coordinate, Coordinate> AIPlayerLevel4::getMove() {
 
     srand(time(0));
 
-    if (preferredMoves.size() == 0 && mildPreferredMoves.size() == 0) {
+    if (preferredMoves.size() == 0) {
         return possibleMoves[rand() % possibleMoves.size()];
-    } else if (preferredMoves.size() == 0 ) {
-        return mildPreferredMoves[rand() % mildPreferredMoves.size()];
     } else {
         return preferredMoves[rand() % preferredMoves.size()];
     }
