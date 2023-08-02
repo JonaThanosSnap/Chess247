@@ -215,7 +215,13 @@ void InputManager::enterSetupMode(){
                 continue;
             }
             newPiece.setHasMoved(true);
-            game->setupPlacePiece(location, newPiece);
+
+            try {
+                game->setupPlacePiece(location, newPiece);
+            } catch (...) {
+                std::cout << "Could not add piece: coords out of range." << std::endl;
+                continue;
+            }
 
             // rerender the board
             render->render();
@@ -230,7 +236,12 @@ void InputManager::enterSetupMode(){
 
             Coordinate location = Coordinate{coord};
 
-            game->setupRemovePiece(location);
+            try {
+                game->setupRemovePiece(location);
+            } catch (...) {
+                std::cout << "Could not remove piece: coords out of range." << std::endl;
+                continue;
+            }
 
             render->render();
             windowRender->render();
